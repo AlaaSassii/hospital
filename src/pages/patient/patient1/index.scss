@@ -1,0 +1,78 @@
+
+.save{
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin: auto;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            h6{
+            font-size: 20px;
+            }
+            button{
+            margin-left: 10px;
+            }
+}
+.grid{
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill , minmax(600px , 1fr));
+            grid-gap: 40px;
+            
+            >div{
+            >div{
+            display: flex;
+            margin-bottom: 20px;
+            justify-content: space-between;
+            
+            input[type="text"] , textarea , >select , .date{
+            padding: 5px 10px;
+            width: 60%;
+            position: relative;
+            
+            }
+            input, textarea , select {
+                        border: #D3D3D3 1px solid ;
+            }
+            input[type="date"] {
+                        width: 80%;
+                        padding: 5px 10px;
+                        background-color: white;
+                        position: relative;
+                        &::before{
+                        content:"" ; 
+                        position: absolute;
+                        background-color: white;
+                        top:0 ; 
+                        width: 20px;
+                        height:100%;
+                        top:0 ; 
+                        right:10px ; 
+                        z-index: 9;
+                        transform: translateY(20%);
+            }
+            }
+            }
+            }
+            .calendar-wrapper{
+                        display: flex;
+                        align-items: center;
+                        >div{
+                                    display: flex;
+                                    align-items: center;
+                        }
+            .time-table1{
+            }
+            .calenderElement{
+                        top:60px ; 
+                        left:20px ;
+                        z-index: 3;
+                        position: absolute;
+                        width: 26.667em;
+                        border: 1px solid #dfdfdf;
+                        border-radius: 5px;
+            }
+            }
+
+}

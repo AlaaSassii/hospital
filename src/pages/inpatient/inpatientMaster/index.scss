@@ -1,0 +1,65 @@
+.InpatientMaster{
+form{
+
+
+            
+            width: 80%;
+            margin: auto;
+            .forms{
+            display: flex;
+            flex-wrap: wrap;
+            button{
+                        border:none ;
+                        width: 50px;
+                        padding: 5px;
+                        }
+            >div{
+            display: flex;
+            margin-right: 20px;
+            flex-basis: 20%;
+            align-items: center;
+            input{
+            margin-left: 10px;
+            padding:7px ; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            }
+            
+            
+            }
+            }
+            div:last-child{
+                        margin-top: 20px;
+                        display: flex;
+                        flex-direction: row-reverse;
+                        transform: translateX(-110px);
+                        input{
+                                    margin-left: 10px;
+                                    padding:7px ; 
+                                    border: 1px solid #ccc;
+                                    border-radius: 4px;
+                        }
+                        button{
+                        width: 35px;
+                        margin-right: 10px;
+                        border:none ;
+                        border-radius: 4px;
+                        cursor: pointer;
+            }
+            }
+}
+.btns{
+            width: 90%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row-reverse;
+            button{
+              border:none ; 
+              margin-right: 20px;
+              width: 40px;
+              height: 25px;
+              border-radius: 4px;
+            }
+
+}
+}
