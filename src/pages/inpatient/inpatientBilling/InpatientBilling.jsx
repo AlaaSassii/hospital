@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Calendar } from 'react-date-range' 
 import format from 'date-fns/format' 
 
 import './index.scss'
 import { AiOutlineCalendar } from 'react-icons/ai'
+import { CurrentPageContext } from '../../../contexts/CurrentPage'
 const InpatientBilling = () => {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  useEffect(()=>{
+    setCurrentPage("In-Patient Billing ")
+  },[])
             const [calendarTime1, setcalendarTime1] = useState(''); 
             const [calendarTime2, setcalendarTime2] = useState(''); 
             const [showCalender1 , setShowCalender1] = useState(false) ; 

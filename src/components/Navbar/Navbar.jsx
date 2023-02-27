@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState ,useContext} from 'react'
+import { CurrentPageContext } from '../../contexts/CurrentPage'
 // react-router-dom
 import {Link} from 'react-router-dom'
 // images 
@@ -9,6 +10,8 @@ import {BiSearch} from 'react-icons/bi'
 // style 
 import './index.scss'
 const Navbar = () => {
+  const {currentPage} = useContext(CurrentPageContext) ;
+  console.log(currentPage)
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleLinkClick = (index) => {
@@ -17,6 +20,8 @@ const Navbar = () => {
   return (
     <div className='navs'>
             <header>
+            <h3>{currentPage}</h3>
+
                         <div className='input'>
                         <input type="text" placeholder='Search'/>
                         <button><BiSearch/></button>

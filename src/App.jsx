@@ -9,14 +9,21 @@ import InpatientReg from './pages/inpatient/inpatientReg/InpatientReg'
 import Menu from './pages/inpatient/menu/Menu'
 import Patient from './pages/patient/patient1/Patient'
 import Patient2 from './pages/patient/patient2/Patient2'
+import { CurrentPageContextProvider } from './contexts/CurrentPage'
 function App() {
   return (
+    <CurrentPageContextProvider>
     <div className="App">
       <PageWrapper>
         <Patient2/>
       </PageWrapper>
     </div>
+    </CurrentPageContextProvider>
+  
   )
 }
 
 export default App
+  {/*992px to 1199px
+1200px to 1399px
+>= 1400px */}

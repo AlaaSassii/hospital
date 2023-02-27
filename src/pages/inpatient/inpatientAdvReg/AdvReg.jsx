@@ -1,9 +1,14 @@
-import React, {useState , useEffect} from 'react'
+import React, {useState , useEffect, useContext} from 'react'
 import { Calendar } from 'react-date-range' 
 import format from 'date-fns/format' 
 import { AiOutlineCalendar } from 'react-icons/ai';
 import './index.scss'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
 const AdvReg = () => {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  useEffect(()=>{
+    setCurrentPage("In Patient Advance Register ")
+  },[])
   const [calendarTime1, setcalendarTime1] = useState(''); 
   const [showCalender1 , setShowCalender1] = useState(false) ; 
   console.log(showCalender1) ;  
@@ -25,7 +30,7 @@ const AdvReg = () => {
               <div className='calendar-wrapper'>
             <p>Date of birth</p>
             <div className="date">
-            <button className="btn-date" onClick={()=>setShowCalender1(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
+            <button className="btn-date" onClick={(e)=>{ e.preventDefault();setShowCalender1(Calendar => !Calendar)}}><AiOutlineCalendar style={{fontSize:19 }}/></button>
             <input type="text" readOnly value={calendarTime1}   />
             {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
 {/* calendar when the button hits is re-render everything */}

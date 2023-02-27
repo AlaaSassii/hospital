@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import './index.scss'
 const InpatientBillReps = () => {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  useEffect(()=>{
+    setCurrentPage("In Patient List")
+  },[])
   return (
     <div className='InpatientBillReps'>
             <h5 className='back'>{">back"}</h5>

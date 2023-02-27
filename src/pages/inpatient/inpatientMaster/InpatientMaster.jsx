@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FiSearch } from 'react-icons/fi'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import './index.scss'
 const InpatientMaster = () => {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  useEffect(()=>{
+    setCurrentPage("In Paitent Master")
+  },[])
   return (
     <div className='InpatientMaster'>
             <div className='back'>{"<Back"}</div>

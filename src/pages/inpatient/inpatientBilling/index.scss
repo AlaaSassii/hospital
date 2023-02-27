@@ -1,4 +1,14 @@
 .InpatientBilling{
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    font-size: small;
+  }
+  .calenderElement{
+    transform: translate(-170px , -40px);
+    padding:10px
+    button{
+      
+    }
+  }
             .back{
             padding: 20px;
             font-size: 25px;
@@ -131,6 +141,41 @@
                         }
                       }
                    .form3{
+                    @media screen and (min-width: 992px) and (max-width: 1199px) {
+                      font-size: small;
+                      width: 100%;
+                      input{
+                        margin-left: 0px;
+
+                      }
+                      >div{
+                        &:first-child{
+                        >div{
+                          flex-direction: column;
+                          align-items: start;
+                          text-align: left; 
+                        }}}
+                    }
+                    @media screen and (min-width: 1200px) and (max-width: 1399px) {
+                      font-size: medium;
+                      width: 100%;
+                      >div{
+                        &:first-child{
+                        >div{
+                          align-items: center;
+                          
+                        }}}
+                    }
+                    @media screen and (min-width: 1400px) {
+                      font-size: medium;
+                      width: 90%;
+                      >div{
+                        &:first-child{
+                        >div{
+                          align-items: center;
+                          
+                        }}}
+                    }
                         width: 80%;
                         margin:auto ;
                         margin-top: 50px;
@@ -140,8 +185,12 @@
                         >div{
                         flex-basis: 25%;
                         display: flex;
-                        align-items: center;
                         margin-bottom: 10px;
+                        @media screen and (min-width: 992px) and (max-width: 1199px) {
+                          p{
+                            margin-left: 10px;
+                          }
+                        }
                         input{
                         margin-left: 10px;
                         padding:4px ; 
@@ -171,7 +220,7 @@
                         button{
                         border:none ; 
                         padding:5px ;
-                        margin-right: 5px;
+                        margin: 5px;
                         }
                         }
                         }

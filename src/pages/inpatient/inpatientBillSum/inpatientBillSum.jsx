@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsQuestionCircle } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
+import {BiFilterAlt} from 'react-icons/bi' ;
+
 import './index.scss'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
 
 const InpatientBilSum = () => {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  useEffect(()=>{
+    setCurrentPage("In Patients Bill Reports")
+  },[])
   return (
             <div>
             <h5 className='back'>{">back"}</h5>
             <div className='save '>
             <div className='btn-icons'>
             <button><div><AiOutlinePlus style={{fontSize:25}}/></div></button>
-            <button><FiSearch style={{fontSize:25}}/></button>
+            <button><BiFilterAlt style={{fontSize:25}}/></button>
             <button><FiSearch style={{fontSize:25}}/></button>
             <button><BsQuestionCircle style={{fontSize:25}}/></button>
             </div>
