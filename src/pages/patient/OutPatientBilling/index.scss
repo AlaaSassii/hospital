@@ -1,0 +1,234 @@
+.OutPatientBilling{
+            @media screen and (min-width: 992px) and (max-width: 1199px) {
+              font-size: small;
+            }
+            .calenderElement{
+              transform: translate(-170px , -40px);
+              padding:10px
+              button{
+                
+              }
+            }
+                      .back{
+                      padding: 20px;
+                      font-size: 25px;
+                      }
+                      h3{
+                      margin:20px 40px
+                      }
+                      .form1{
+                      width: 80%;
+                      margin: auto;
+                      display: flex;
+                      justify-content: space-between;
+          
+                      >div:first-child{flex-basis: 60%;}
+                      >div>div{
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      margin-bottom: 10px;
+                      input{
+                      width: 80%;
+                      padding:7px ; 
+                      border:1px solid #ccc ; 
+                      }
+                      }
+                      >div:last-child{flex-basis: 30%;
+                                  .calendar-wrapper{
+                                              display: flex;
+                                              justify-content: space-between;
+                                              position: relative;
+                      
+                                              .date{
+                                              flex-basis: 60%;
+                                              display: flex;
+                                              justify-content: space-between;
+                                              input{
+                                              flex-basis: 80%;
+                                              border: 1px solid #ccc;
+                                              padding:7px 10px ;
+                                              }
+                                              button{
+                                              border:1px solid #ccc ; 
+                                              background-color: white;
+                                              border-radius: 4px;
+                                              }
+                                              .calenderElement{
+                                                          top:60px ; 
+                                                          left:20px ;
+                                                          z-index: 3;
+                                                          position: absolute;
+                                                          width: 26.667em;
+                                                          border: 1px solid #dfdfdf;
+                                                          border-radius: 5px;
+                                              }
+                                              }
+                                  }
+                      }
+                      }
+                      .form2{
+                      width: 80%;
+                      margin:auto ;
+                      margin-top: 20px; 
+                      display: flex;
+                      align-items: center;
+                      >div{
+                      flex-basis: 33%;
+                      display: flex;
+                      align-items: center;
+                      p{
+                      margin-right: 10px;
+                      }
+                      input{
+                      width: 70%;
+                      padding:7px ; 
+                      border:1px solid #ccc ; 
+                      }
+                      }
+                      }
+                      .table-container {
+                                  width: 80%;
+                                  max-height: 200px; /* Set a fixed height */
+                                  overflow-y: auto; /* Enable vertical scrolling */
+                                  margin: auto;
+                                  margin-top: 40px;
+                                
+                                  table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                  }
+                                
+                                  th {
+                                    text-align: left;
+                                    border-bottom: 1px solid #ccc; /* Add a border at the bottom of each th */
+                                    padding: 8px;
+                                    padding-bottom: 12px;
+                                    font-weight: 400;
+                                    font-size: 15.3728px;
+                                    line-height: 26px;
+                                    letter-spacing: 0.0015em;
+                                    color: #828282;
+                                  }
+                                
+                                  tbody {
+                                    overflow-y: auto;
+                                    height:100px;
+                                  }
+                                  
+                                  td {
+                                    padding: 8px;
+                                    padding-bottom: 20px;
+                                  }
+                                
+                                  /* Styles for the scrollbar */
+                                  .table-container::-webkit-scrollbar {
+                                    width: 8px;
+                                  }
+                                
+                                  .table-container::-webkit-scrollbar-thumb {
+                                    background-color: #aaa;
+                                    border-radius: 8px;
+                                  }
+                                
+                                  .table-container::-webkit-scrollbar-thumb:hover {
+                                    background-color: #999;
+                                  }
+                                
+                                  .table-container::-webkit-scrollbar-track {
+                                    background-color: #ddd;
+                                    border-radius: 8px;
+                                  }
+                                }
+                             .form3{
+                              @media screen and (min-width: 992px) and (max-width: 1199px) {
+                                font-size: small;
+                                width: 100%;
+                                input{
+                                  margin-left: 0px;
+          
+                                }
+                                >div{
+                                  &:first-child{
+                                  >div{
+                                    flex-direction: column;
+                                    align-items: start;
+                                    text-align: left; 
+                                  }}}
+                              }
+                              @media screen and (min-width: 1200px) and (max-width: 1399px) {
+                                font-size: medium;
+                                width: 100%;
+                                >div{
+                                  &:first-child{
+                                  >div{
+                                    align-items: center;
+                                    
+                                  }}}
+                              }
+                              @media screen and (min-width: 1400px) {
+                                font-size: medium;
+                                width: 90%;
+                                >div{
+                                  &:first-child{
+                                  >div{
+                                    align-items: center;
+                                    
+                                  }}}
+                              }
+                                  width: 80%;
+                                  margin:auto ;
+                                  margin-top: 50px;
+                                  >div{
+                                  display: flex;
+                                  &:first-child{
+                                  >div{
+                                  flex-basis: 25%;
+                                  display: flex;
+                                  margin-bottom: 10px;
+                                  @media screen and (min-width: 992px) and (max-width: 1199px) {
+                                    p{
+                                      margin-left: 10px;
+                                    }
+                                  }
+                                  input{
+                                  margin-left: 10px;
+                                  padding:4px ; 
+                                  border:1px solid #ccc ; 
+                                  }
+                                  }
+                                  }
+                                  &:last-child{
+                                  display: flex;
+                                  align-items: center;
+                                  div:first-child{
+                                  display: flex;
+                                  align-items: center;
+                                  flex-basis: 70%;
+                                  >div{
+                                  display: flex;
+                                  align-items: center;  
+                                  flex-basis: 33%;  
+                                  input{
+                                              margin-left: 10px;
+                                              padding:4px ; 
+                                              border:1px solid #ccc ; 
+                                              }
+                                  }
+                                  }
+                                  div:last-child{
+                                  button{
+                                  border:none ; 
+                                  padding:5px ;
+                                  margin: 5px;
+                                  }
+                                  }
+                                  }
+                                  }
+                             }
+                                
+                                
+                             button{
+                                  cursor: pointer;
+                             }
+          }

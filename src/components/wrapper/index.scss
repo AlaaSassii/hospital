@@ -8,7 +8,7 @@ width: 35px;
             width: calc(100% - 15.5rem);
             min-height: calc(100% - 4.8125rem);
             border: #D3D3D3 1px solid ;
-
+            background-color: white;
             .def-button{
             border:none ;
             outline:none ;  
@@ -19,4 +19,7 @@ width: 35px;
             cursor: pointer;
             margin-right:10px ;
             }
+}
+.menu{
+background-color: #D3D3D3;
 }

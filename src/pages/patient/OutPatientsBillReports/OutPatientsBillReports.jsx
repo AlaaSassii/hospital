@@ -5,10 +5,14 @@ import {FiSearch} from 'react-icons/fi' ;
 import {AiOutlinePlus} from 'react-icons/ai' ; 
 import {BiFilterAlt} from 'react-icons/bi' ;
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 const Patient2 = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const { setMenuPage } = useContext(MenuPageContext)
   useEffect(()=>{
-    setCurrentPage("Out Patients Bill Reports")
+    setCurrentPage("Out Patients Bill Reports") ; 
+    setMenuPage(false)
+
   },[])
   return (
     <div>
@@ -44,6 +48,14 @@ const Patient2 = () => {
             <td>Data 3</td>
           </tr>
           <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 3</td>
+            <td>Data 3</td>
+            <td>Data 3</td>
+          </tr>
+           <tr>
             <td>Data 1</td>
             <td>Data 2</td>
             <td>Data 3</td>

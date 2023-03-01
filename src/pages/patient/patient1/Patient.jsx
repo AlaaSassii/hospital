@@ -4,7 +4,7 @@ import {AiOutlineCalendar} from 'react-icons/ai' ;
 import { Calendar } from 'react-date-range';
 import format from 'date-fns/format' 
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
-
+import axios from 'axios';
 const Patient = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   useEffect(()=>{
@@ -17,8 +17,22 @@ const Patient = () => {
   useEffect(()=>{
     setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; 
     setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
-
   },[])
+  useEffect(()=>{
+    const data = {
+      Patient: 10,
+      Doctor: 1,
+      Purpose: "Consulation",
+      Referral: "someone",
+      Prepared_by: "don't care",
+      Remarks: "he is not good",
+      Status: "Waiting_Patient",
+      Category: "New Patient",
+    };
+      axios.post('http://127.0.0.1:8000/Patient/create-patient', data).then(response => console.log(response.data)).catch(err => console.log(JSON.stringify(err)))
+
+  }
+  ,[])
   console.log(calendarTime1 , calendarTime2)
   return (
     <div >

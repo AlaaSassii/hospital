@@ -1,0 +1,25 @@
+.OutPatientsUncloseList{
+            .table-container{
+                        th , td{
+                                    text-align: center;
+                        }
+            }
+            .last_btn{
+            width: fit-content;
+            margin-left: auto;
+            margin-top: 30px;
+            transform: translateX(-170px);
+            display: flex;
+            gap:10px ;
+            button{
+            background-color: #E0E0E0;
+            border:none ;
+            width: 70px;
+            height: 30px;
+            border-radius: 4px;
+            }
+            }
+            button{
+                        cursor: pointer;
+            }
+}

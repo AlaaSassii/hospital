@@ -17,3 +17,33 @@ body{
             left:20px ;
             
 }
+.status_recoverd{
+            background:   #aff8ce;
+            color: rgba(39, 174, 96, 1);
+            width: 150px;
+            text-align: center;
+            padding-top: 10px;
+            display: inline-block;
+            height: 40px;
+            border-radius: 20px
+          }
+          .status_awaiting_surgery{
+            background:   #aacfff;
+            color: rgba(47, 128, 237, 1);
+            width: 150px;
+            text-align: center;
+            padding-top: 10px;
+            display: inline-block;
+            height: 40px;
+            border-radius: 20px
+          }
+          .status_on_treatment{
+            background:   rgb(255, 191, 191);
+            color:  rgb(185, 0, 0) ;
+            width: 150px;
+            text-align: center;
+            padding-top: 10px;
+            display: inline-block;
+            height: 40px;
+            border-radius: 20px
+          }
