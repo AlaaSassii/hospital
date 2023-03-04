@@ -1,19 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Calendar } from 'react-date-range' 
 import format from 'date-fns/format' 
-
-import './index.scss'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { CurrentPageContext } from '../../../contexts/CurrentPage'
-import { MenuPageContext } from '../../../contexts/MenuPage'
-const OutPatientBilling = () => {
+const TestEntery = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
-  const {setMenuPage} = useContext(MenuPageContext) 
-
   useEffect(()=>{
-    setCurrentPage("OutPatientBilling") ; 
-    setMenuPage(false) ; 
-
+    setCurrentPage("TestEntery")
   },[])
             const [calendarTime1, setcalendarTime1] = useState(''); 
             const [calendarTime2, setcalendarTime2] = useState(''); 
@@ -26,10 +19,10 @@ const OutPatientBilling = () => {
             },[])
             console.log(calendarTime1 , calendarTime2)
   return (
-    <div className='OutPatientBilling'>
+    <div className='InpatientBilling'>
             <h5 className='back'>{"<Back"}</h5>
             <h3>New Bill</h3>
-            <div className="form1">
+            <div className="form1" style={{marginBottom:30}}>
             <div>
             <div><p>Bill No</p><input type="text" /></div>
             <div><p>Ip number</p><input type="text" /></div>
@@ -53,6 +46,8 @@ const OutPatientBilling = () => {
               {showCalender2 && <Calendar className='calenderElement' onChange={item => { setcalendarTime2(format(item , 'MM/dd/yyyy'))}} />}
             </div>
             </div>
+            <div><p>Ref Doctor</p><input type="text" /></div>
+
             </div>
             </div>
             <div className="form2">
@@ -64,55 +59,40 @@ const OutPatientBilling = () => {
       <table>
         <thead>
           <tr>
-            <th>Item Code</th>
-            <th>Item  name</th>
-            <th>Amount </th>
-            <th>Category</th>
+            <th>Code</th>
+            <th>Test Name</th>
+            <th>Test Values</th>
+            <th>Units</th>
+            <th>Ref Values 1</th>
+            <th>Ref Values 2</th>
+            <th>Ref Values 3</th>
           </tr>
         </thead>
         <tbody className="table-body">
           <tr>
             <td>54125415</td>
-            <td>Xray</td>
-            <td>1200</td>
-            <td>Scan</td>
-            
+            <td>Hemoglobin</td>
+            <td>15</td>
+            <td>g/dl</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
           </tr>
-          <tr>
-            <td>54125415</td>
-            <td></td>
-            <td>2000</td>
-            <td></td>
-            
-          </tr>
-          {/* Add more rows here */}
         </tbody>
       </table>
     </div>
-            <div className="form3">
-            <div>
-            <div><p>Total Items</p><input type="text" /></div>
-            <div><p>SubToal</p><input type="text" /></div>
-            <div><p>Discount%</p><input type="text" /></div>
-            <div><p>Net Total</p><input type="text" /></div>
-            </div>
-            
-            <div>
-            <div><div><p>Pay Mode</p><input type="text" /></div>
-            <div><p>Advance</p><input type="text" /></div>
-            <div><p>Prepared by</p><input type="text" /></div></div>
-            <div>
-            <button>Save</button>
-            <button>Draft</button>
-            <button>Load Draft</button>
-            <button>Remove</button>
-            <button>Apply</button>
-            <button>Clear</button>
+            <div className="form3_buttons" style={{width:"80%",margin:"auto"}}>
+            <div style={{marginLeft:"auto",width:"fit-content",display:"flex",gap:"0.5rem"}}>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Save</button>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Draft</button>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Load Draft</button>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Remove</button>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Apply</button>
+            <button style={{padding:"5px 5px",minWidth:70,border:"none",background:"#ccc"}}>Clear</button>
             </div>
             </div>
             </div>
-</div>
   )
 }
 
-export default OutPatientBilling
+export default TestEntery

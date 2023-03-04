@@ -16,6 +16,7 @@ const Patient2 = () => {
   },[])
   return (
     <div>
+         <div className="back">{"<Back"}</div>
             <div className='save '>
             <h6>Bill reports</h6>
             <div className='btn-icons'>

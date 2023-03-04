@@ -5,10 +5,14 @@ import { Calendar } from 'react-date-range';
 import format from 'date-fns/format' 
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import axios from 'axios';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 const Patient = () => {
-  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setCurrentPage } = useContext(CurrentPageContext) ; 
+  const {setMenuPage} = useContext(MenuPageContext) 
+
   useEffect(()=>{
-    setCurrentPage("Out-Patient Registeration ")
+    setCurrentPage("Out-Patient Registeration ") ;
+    setMenuPage(false) ; 
   },[])
   const [calendarTime1, setcalendarTime1] = useState(''); 
   const [calendarTime2, setcalendarTime2] = useState(''); 
@@ -36,7 +40,7 @@ const Patient = () => {
   console.log(calendarTime1 , calendarTime2)
   return (
     <div >
-            <p>{"< Back"}</p>
+            <div className="back">{"<Back"}</div>
             <div className='save '>
             <h6>Add New Patient</h6>
             <div>

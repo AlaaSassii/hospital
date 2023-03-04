@@ -6,7 +6,7 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import './index.scss'
 const OutPatientMaster = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
-  const {setMenuPage} = useContext(MenuPageContext)
+  const {setMenuPage} = useContext(MenuPageContext) 
   useEffect(()=>{
     setCurrentPage("Out Pateint Master") ; 
     setMenuPage(false) ; 

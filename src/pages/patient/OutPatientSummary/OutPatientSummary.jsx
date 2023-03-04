@@ -18,7 +18,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
   },[])
   return (
             <div className='OutPatientSummary'>
-            <h5 className='back'>{">back"}</h5>
+            <div className='back'>{">back"}</div>
             <div className='save '>
             <div className='btn-icons'>
             <button><div><AiOutlinePlus style={{fontSize:25}}/></div></button>

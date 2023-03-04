@@ -10,13 +10,16 @@
               }
             }
                       .back{
-                      padding: 20px;
-                      font-size: 25px;
                       }
                       h3{
                       margin:20px 40px
                       }
                       .form1{
+                      @media screen and (min-width: 992px) and (max-width: 1199px){
+                        width: 90%;
+                      justify-content: safe;
+
+                      }
                       width: 80%;
                       margin: auto;
                       display: flex;

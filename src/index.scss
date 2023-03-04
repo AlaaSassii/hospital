@@ -17,6 +17,11 @@ body{
             left:20px ;
             
 }
+input{
+  flex-basis: 80%;
+  border: 1px solid #ccc;
+  padding:7px 10px ;
+  }
 .status_recoverd{
             background:   #aff8ce;
             color: rgba(39, 174, 96, 1);
@@ -47,3 +52,10 @@ body{
             height: 40px;
             border-radius: 20px
           }
+.back{
+  color: blue;
+}
+select{
+  padding:7px 10px ; 
+  border:solid #e0e0e0 1px ;
+}

@@ -1,9 +1,17 @@
 .OutPatientMaster{
-            form{
+  @media screen and (min-width: 992px) and (max-width: 1199px){
+    font-size: small;
+    .table-container{
+      height:300px; /* Set a fixed height */
+
+    }
+  }
+            form{       
+              
                         width: 80%;
                         margin: auto;
                         @media screen and (min-width: 992px) and (max-width: 1199px) {
-                          width: 100%;
+                          width: 90%;
                           font-size: small;
                           .forms>div{
                           margin-right: 5px;
@@ -11,7 +19,7 @@
                           }
                           .forms>button{
                             margin-right: 10px;
-                            width: 30px;
+                            width: fit-content;
                           }
                         }
                         .forms{
@@ -141,4 +149,7 @@
             button{
               cursor: pointer;
             }
+            }
+
+            .back{
             }

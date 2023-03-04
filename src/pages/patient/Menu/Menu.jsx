@@ -26,41 +26,41 @@ const Menu = () => {
     <div className='Out_patient_menu'>
             <ul>
             <li>
-            <Link to="/"><img src={image7}/><p>Out-Patient Registration</p></Link>
+            <Link to="/OutPatientMenu/OutPatientReg"><img src={image7}/><p>Out-Patient Registration</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image1}/><p>Out-Patient 
+            <Link to="/OutPatientMenu/OutPatientBilling"><img src={image1}/><p>Out-Patient 
 Billing</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image3}/><p>OPD
+            <Link to="/OutPatientMenu/OutPatientMaster"><img src={image3}/><p>OPD
 Master</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image2}/><p>OPD
+            <Link to="/OutPatientMenu/OutPatientReg"><img src={image2}/><p>OPD
 Bulk Upload</p></Link>
             </li>
             </ul>
             <ul>
             <li>
-            <Link to="/"><img src={image4}/><p>OP List</p></Link>
+            <Link to="/OutPatientMenu/OutPatientReg"><img src={image4}/><p>OP List</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image5}/><p>OP Waiting List</p></Link>
+            <Link to="/OutPatientMenu/OutPatientWaitingList"><img src={image5}/><p>OP Waiting List</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image9}/><p>OP close List</p></Link>
+            <Link to="/OutPatientMenu/OutPatientsUncloseList"><img src={image9}/><p>OP close List</p></Link>
             </li>
             </ul>
             <ul>
             <li>
-            <Link to="/"><img src={image8}/><p>OP Bill Reports</p></Link>
+            <Link to="/OutPatientMenu/OutPatientReps"><img src={image8}/><p>OP Bill Reports</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image6}/><p>OP Bill Summary</p></Link>
+            <Link to="/OutPatientMenu/OutPatientSummary"><img src={image6}/><p>OP Bill Summary</p></Link>
             </li>
             <li>
-            <Link to="/"><img src={image10}/><p>OP List</p></Link>
+            <Link to="/OutPatientMenu/OutPatientReg"><img src={image10}/><p>OP List</p></Link>
             </li>
             </ul>
     </div>

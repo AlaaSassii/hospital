@@ -1,0 +1,61 @@
+.LabReport{
+            .form1{
+            width: 80%;
+            margin: auto;
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            >div{
+            display: flex;
+            align-items: center;
+            gap:20px ; 
+            >div{
+            display: flex;
+            gap:20px ;
+            align-items: center;
+            }
+            }
+            }
+            .calendar-wrapper{
+                        display: flex;
+                        justify-content: space-between;
+                        position: relative;
+
+                        .date{
+                        flex-basis: 60%;
+                        display: flex;
+                        justify-content: space-between;
+                        input{
+                        flex-basis: 80%;
+                        border: 1px solid #ccc;
+                        padding:7px 10px ;
+                        }
+                        button{
+                        border:1px solid #ccc ; 
+                        background-color: white;
+                        border-radius: 4px;
+                        }
+                        .calenderElement{
+                                    top:60px ; 
+                                    left:20px ;
+                                    z-index: 3;
+                                    position: absolute;
+                                    width: 26.667em;
+                                    border: 1px solid #dfdfdf;
+                                    border-radius: 5px;
+                        }
+                        }
+            }
+            .btn{
+            align-items: center;
+            display: flex;
+            button{
+            height: 100%;
+            width: 35px;
+            font-weight: 500;
+            &:last-child{
+            border:none;
+            }
+            }
+            }
+}
