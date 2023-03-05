@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Calendar } from 'react-date-range'
 import format from 'date-fns/format' 
 import { AiOutlineCalendar, AiOutlinePlus } from 'react-icons/ai';
@@ -6,7 +6,16 @@ import {BiFilterAlt} from 'react-icons/bi'
 import { FiSearch } from 'react-icons/fi';
 import { BsQuestionCircle } from 'react-icons/bs';
 import './index.scss'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 function LabReport() {
+
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
+  useEffect(()=>{
+    setCurrentPage("Lab report") ; 
+    setMenuPage(false) ; 
+  },[])
             const [calendarTime1, setcalendarTime1] = useState(''); 
             const [calendarTime2, setcalendarTime2] = useState(''); 
             const [showCalender1 , setShowCalender1] = useState(false) ; 

@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { FiSearch } from 'react-icons/fi'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 import './index.scss' ; 
 
 function TestMaster() {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
+  useEffect(()=>{
+    setCurrentPage("Test Master") ; 
+    setMenuPage(false) ; 
+  },[])
   return (
     <div className='TestMaster'>
             <div className='back'>{"< back"}</div>
@@ -13,9 +21,7 @@ function TestMaster() {
             <div><p>Test name</p> <input type="text" /></div>
             <div><p>Units</p> <input type="text" /></div>
             <button>Save</button>
-            </div>
-            <div className="form">
-            <div><p>Ref values</p> <input type="text" /></div>
+            <div><p>{"Ref values"}</p> <input type="text" /></div>
             <div><p>Ref values 2</p> <input type="text" /></div>
             <div><p>Ref values 3</p> <input type="text" /></div>
             <div><p>Ref values 4</p> <input type="text" /></div>

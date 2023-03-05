@@ -23,7 +23,9 @@ import { BrowserRouter , Routes ,Route, Link } from 'react-router-dom'
 import TestEntery from './pages/lab/testentery/TestEntery'
 import DeparmentMaster from './pages/lab/DeparmentMaster/DeparmentMaster'
 import CategoryMaster from './pages/lab/CategoryMaster/CategoryMaster'
-import LabReport from './pages/lab/LabReport/LabReport'
+import LabReport from './pages/lab/LabReport/LabReport' 
+import TestMaster from './pages/lab/TestMasterr/TestMaster'
+import MenuLab from './pages/lab/MenuLab/MenuLab'
 function App() {
   return (
     <CurrentPageContextProvider>
@@ -43,7 +45,7 @@ function App() {
         <Route path='/OutPatientMenu/OutPatientReg' element={<OutPatientReg/>}/>
 
         </Routes> */}
-        <LabReport />
+        <TestEntery />
       </PageWrapper>
    
     </CurrentPageContextProvider>

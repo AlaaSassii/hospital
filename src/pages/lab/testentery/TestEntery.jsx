@@ -3,10 +3,13 @@ import { Calendar } from 'react-date-range'
 import format from 'date-fns/format' 
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { CurrentPageContext } from '../../../contexts/CurrentPage'
+import { MenuPageContext } from '../../../contexts/MenuPage'
 const TestEntery = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
   useEffect(()=>{
-    setCurrentPage("TestEntery")
+    setCurrentPage("Out Pateint Master") ; 
+    setMenuPage(false) ; 
   },[])
             const [calendarTime1, setcalendarTime1] = useState(''); 
             const [calendarTime2, setcalendarTime2] = useState(''); 

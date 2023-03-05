@@ -1,15 +1,17 @@
 .TestMaster {
   .form {
-    width: 80%;
+    width: 90%;
     margin: auto;
     margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
+    font-size: small;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 100px;
+    grid-gap: 20px;
 
     div {
       display: flex;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
     }
 
     button {

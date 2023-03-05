@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { FiSearch } from 'react-icons/fi'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 import './index.scss'
 function CategoryMaster() {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
+  useEffect(()=>{
+    setCurrentPage("Department Master") ; 
+    setMenuPage(false) ; 
+  },[])
   return (
     <div className='CategoryMaster'>
             <div className="back">{"< back"}</div>

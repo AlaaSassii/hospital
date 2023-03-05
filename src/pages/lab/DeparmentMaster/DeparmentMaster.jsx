@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
 import './index.scss'
 function DeparmentMaster() {
+  const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
+  useEffect(()=>{
+    setCurrentPage("Department Master") ; 
+    setMenuPage(false) ; 
+  },[])
   return (
     <div className='DeparmentMaster'>
       <div className='back'>{"< back"}</div>
