@@ -45,7 +45,7 @@ function App() {
         <Route path='/OutPatientMenu/OutPatientReg' element={<OutPatientReg/>}/>
 
         </Routes> */}
-        <TestEntery />
+        <OutPatientReg />
       </PageWrapper>
    
     </CurrentPageContextProvider>
