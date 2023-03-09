@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './index.scss'
 import {BsQuestionCircle} from 'react-icons/bs' ; 
 import {FiSearch} from 'react-icons/fi' ; 
@@ -6,14 +6,26 @@ import {AiOutlinePlus} from 'react-icons/ai' ;
 import {BiFilterAlt} from 'react-icons/bi' ;
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import { MenuPageContext } from '../../../contexts/MenuPage';
+import axios from 'axios';
+import TableRows from './component/TableRows';
 const Patient2 = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
-  const { setMenuPage } = useContext(MenuPageContext)
+const {MenuPage , setMenuPage} = useContext(MenuPageContext);
+  const [FetchingLoading , setFetchingLoading] = useState(true) ; 
+  const [data , setdata ] = useState("") ;
+
+  useEffect(()=>{
+    setFetchingLoading(true) ; 
+    axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+    .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
+    .catch(err => console.log(err)) ;
+  },[])
   useEffect(()=>{
     setCurrentPage("Out Patients Bill Reports") ; 
     setMenuPage(false)
 
   },[])
+  if(FetchingLoading) return <h1>Loading...</h1>
   return (
     <div>
          <div className="back">{"<Back"}</div>
@@ -32,76 +44,14 @@ const Patient2 = () => {
         <thead>
           <tr>
             <th>{"< Filter >"}</th>
-            <th>Cash</th>
-            <th>Card</th>
+            <th>Cash / Card</th>
             <th>Credit</th>
             <th>Other</th>
             <th>Total</th>
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-           <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 4</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 6</td>
-          </tr>
+        {data.results.map((element , index) => <TableRows key={index} {...element}/>)}
           {/* Add more rows here */}
         </tbody>
       </table>

@@ -1,12 +1,40 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import {MenuPageContext } from '../../../contexts/MenuPage'
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import './index.scss'
+import axios from 'axios';
+
+const initial_state ={
+  it_code: "" , 
+  description:"" , 
+  category:""  , 
+  amount:0 , 
+  save:false , 
+  total_patients:"" ,
+  category:""
+}
+
 const OutPatientMaster = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   const {setMenuPage} = useContext(MenuPageContext) 
+  // states 
+  const [data , setData] = useState(initial_state) ;
+  useEffect(()=>{
+    axios.post('http://3.110.179.238:8000/Patient/create-outpatient-items', {
+      Name: 'Conslutation',
+      Amount: 2000.0,
+      Description: 'asjdfvkjasbfksdnfksdjf',
+      Category: 1
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+      console.log(error);
+  });
+  },[])
   useEffect(()=>{
     setCurrentPage("Out Pateint Master") ; 
     setMenuPage(false) ; 

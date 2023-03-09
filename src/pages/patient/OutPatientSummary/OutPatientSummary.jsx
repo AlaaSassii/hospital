@@ -33,8 +33,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
         <thead>
           <tr>
             <th>{"< Filter >"}</th>
-            <th>Cash</th>
-            <th>Card</th>
+            <th>Cash / Card</th>
             <th>Credit</th>
             <th>Other</th>
             <th>Total</th>
@@ -47,55 +46,8 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
             <td>Data 3</td>
             <td>Data 3</td>
             <td>Data 3</td>
-            <td>Data 3</td>
           </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 4</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 6</td>
-          </tr>
-          {/* Add more rows here */}
+       
         </tbody>
       </table>
     </div>

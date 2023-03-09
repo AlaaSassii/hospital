@@ -6,6 +6,7 @@ import './index.scss'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { CurrentPageContext } from '../../../contexts/CurrentPage'
 import { MenuPageContext } from '../../../contexts/MenuPage'
+import axios from 'axios'
 const OutPatientBilling = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   const {setMenuPage} = useContext(MenuPageContext) 
@@ -15,6 +16,8 @@ const OutPatientBilling = () => {
     setMenuPage(false) ; 
 
   },[])
+
+
             const [calendarTime1, setcalendarTime1] = useState(''); 
             const [calendarTime2, setcalendarTime2] = useState(''); 
             const [showCalender1 , setShowCalender1] = useState(false) ; 
@@ -24,7 +27,54 @@ const OutPatientBilling = () => {
               setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
           
             },[])
-            console.log(calendarTime1 , calendarTime2)
+            console.log(calendarTime1 , calendarTime2) ;
+            const [itemCode, setItemCode] = useState("");
+            const [item, setItem] = useState("");
+            const [amount, setAmount] = useState("");
+            useEffect(()=>{
+              axios.post('http://3.110.179.238:8000/Patient/create-Outpatient-bill', {
+                "OutPatient": 10,
+                "Paid": false,
+                "Created_by": "someone",
+                "Discount":10
+})
+              .then(function (response) {
+                console.log(response.data);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+              
+            },[])
+            useEffect(()=>{
+              // Set the request URL
+              const url = 'http://3.110.179.238:8000/Patient/create-Outpatient-billitems';
+
+              // Set the request data
+              const data ={
+                "bill_id": "1",
+                "bill_items": [
+                    {
+                        "item_id": "1"
+                    },
+                    {
+                        "item_id": "1"
+                    }
+                ]
+            };
+
+// Make the POST request using Axios
+console.log('asdasdasdasdasd')
+axios.post(url, data)
+  .then(response => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch(error => {
+    // Handle the error
+    console.error(error);
+  });
+            },[])
   return (
     <div className='OutPatientBilling'>
             <h5 className='back'>{"<Back"}</h5>
@@ -32,7 +82,7 @@ const OutPatientBilling = () => {
             <div className="form1">
             <div>
             <div><p>Bill No</p><input type="text" /></div>
-            <div><p>Ip number</p><input type="text" /></div>
+            <div><p>outpatient number</p><input type="text" /></div>
             <div><p>Patient  Name</p><input type="text" /></div>
             </div>
 
@@ -56,9 +106,10 @@ const OutPatientBilling = () => {
             </div>
             </div>
             <div className="form2">
-            <div><p>Item Code</p><input type="text" /></div>
-            <div><p>Item </p><input type="text" /></div>
-            <div><p>Amount</p><input type="text" /></div>
+            <div><p>Item Code</p><input type="text"    onChange={(e) => setItemCode(e.target.value)}/></div>
+            <div><p>Item </p><input type="text" onChange={(e) => setItem(e.target.value)} /></div>
+            <div><p>Amount</p><input type="text"  onChange={(e) => setAmount(e.target.value)} /></div>
+            <button onClick={e => handleSubmit(e) }>Save</button>
             </div>
             <div className="table-container">
       <table>

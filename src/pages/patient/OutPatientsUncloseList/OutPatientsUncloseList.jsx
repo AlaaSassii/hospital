@@ -1,18 +1,31 @@
-import React, { useContext, useEffect } from 'react'
+import axios from 'axios';
+import React, { useContext, useEffect , useState} from 'react'
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BiFilterAlt } from 'react-icons/bi';
 import { BsQuestionCircle } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import { MenuPageContext } from '../../../contexts/MenuPage';
+import TableRow from './component/TableRow';
 import './index.scss'
 const OutPatientsUncloseList = () => {
             const {setMenuPage} = useContext(MenuPageContext) ; 
             const {setCurrentPage} = useContext(CurrentPageContext) ;
+            const [data , setdata] = useState({}) ;
+            const [loading ,setLoading] = useState(false) ;
             useEffect(()=>{
+              
                         setMenuPage(false) ; 
                         setCurrentPage("Out Patients Waiting List")
             },[])
+            useEffect(()=>{
+              setLoading(true) ; 
+              axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+              .then(resp =>{ console.log(resp.data) ; setdata(resp.data); setLoading(false)})
+              .catch(err => console.log(err)) ;
+            },[]) ; 
+
+            if(loading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientsUncloseList'>
             <div className="back">{"< back"}</div>
@@ -38,53 +51,7 @@ const OutPatientsUncloseList = () => {
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>1</td>
-            <td>Mary Joseph</td>
-            <td>Dr. someone</td>
-            <td><span className='status_recoverd'>In</span></td>
-            <td>12:48  PM</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Amala Jones</td>
-            <td>Stroke</td>
-            <td><span className='status_awaiting_surgery'>Waiting</span></td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Selim jubril</td>
-            <td>Typhoid</td>
-            <td><span className='status_awaiting_surgery'>Waiting</span></td>
-            <td>12/10/2022</td>
-          </tr>  <tr>
-            <td>4</td>
-            <td>Damilola Oyin</td>
-            <td>Liver failure</td>
-            <td><span className='status_awaiting_surgery'>Waiting </span></td>
-            <td>9/10/2022</td>
-          </tr>  <tr>
-            <td>5</td>
-            <td>Paul christian</td>
-            <td>Gonorrhea</td>
-            <td><span className='status_awaiting_surgery'>Waiting</span></td>
-            <td>22/10/2022</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td><span className='status_recoverd'>Date 4</span></td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td><span className='status_recoverd'>Date 4</span></td>
-            <td>Data 6</td>
-          </tr>
+        {data?.results?.map((element , index) => <TableRow key={index} index={index}{...element}/>)}
           {/* Add more rows here */}
         </tbody>
       </table>

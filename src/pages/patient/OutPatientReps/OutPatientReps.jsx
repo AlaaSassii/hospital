@@ -1,17 +1,29 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './index.scss'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { FiSearch } from 'react-icons/fi'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { MenuPageContext } from '../../../contexts/MenuPage'
-import { CurrentPageContext } from '../../../contexts/CurrentPage'
+import { CurrentPageContext } from '../../../contexts/CurrentPage' 
+import TableRows from './component/TableRows'
+import axios from 'axios'
 const OutPatientReps = () => {
             const {setMenuPage} = useContext(MenuPageContext) ; 
             const {setCurrentPage} = useContext(CurrentPageContext) ;
+            const [FetchingLoading , setFetchingLoading] = useState(true) ; 
+            const [data , setdata ] = useState("") ;
+
+            useEffect(()=>{
+              setFetchingLoading(true) ; 
+              axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+              .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
+              .catch(err => console.log(err)) ;
+            },[])
             useEffect(()=>{
                         setMenuPage(false) ; 
                         setCurrentPage("Out Patients Bill Reports")
             },[])
+  if (FetchingLoading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientReps'>
             <div className="back">{"<Back"}</div>
@@ -38,78 +50,9 @@ const OutPatientReps = () => {
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            </tr>
-            <tr>
-            <td>Data 1</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            </tr>
-            <tr>
-            <td>Data 1</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            </tr>
-            <tr>
-            <td>Data 1</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            </tr>
+        {data.results.map((element , index) => <TableRows key={index} {...element}/>)}
+          
+
         </tbody>
       </table>
       
