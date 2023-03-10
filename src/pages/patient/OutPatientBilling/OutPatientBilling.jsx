@@ -10,7 +10,8 @@ import axios from 'axios'
 const OutPatientBilling = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   const {setMenuPage} = useContext(MenuPageContext) 
-
+  const [bill , setbill] = useState({}) ; 
+  const [loading ,setloading] = useState(true) ;
   useEffect(()=>{
     setCurrentPage("OutPatientBilling") ; 
     setMenuPage(false) ; 
@@ -62,28 +63,30 @@ const OutPatientBilling = () => {
                     }
                 ]
             };
-
 // Make the POST request using Axios
 console.log('asdasdasdasdasd')
 axios.post(url, data)
   .then(response => {
     // Handle the response
     console.log(response.data);
+    setbill(response.data) ; 
+    setloading(false)
   })
   .catch(error => {
     // Handle the error
     console.error(error);
   });
             },[])
+  if(loading) return <h2>Loading...</h2>
   return (
     <div className='OutPatientBilling'>
             <h5 className='back'>{"<Back"}</h5>
             <h3>New Bill</h3>
             <div className="form1">
             <div>
-            <div><p>Bill No</p><input type="text" /></div>
-            <div><p>outpatient number</p><input type="text" /></div>
-            <div><p>Patient  Name</p><input type="text" /></div>
+            <div><p>Bill No</p><input type="text" value={bill.bill_items[bill.bill_items.length - 1].Bill_no}/></div>
+            <div><p>outpatient number</p><input type="text" value={bill?.OutPatient} /></div>
+            <div><p>Patient  Name</p><input type="text" value={bill?.Created_by} /></div>
             </div>
 
             <div>
@@ -91,7 +94,7 @@ axios.post(url, data)
               <p>Date of birth</p>
               <div className="date">
                 <button className="btn-date" onClick={()=>setShowCalender1(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={calendarTime1}   />
+                <input type="text" readOnly value={calendarTime1}    />
               {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
             </div>
             </div>
@@ -106,9 +109,9 @@ axios.post(url, data)
             </div>
             </div>
             <div className="form2">
-            <div><p>Item Code</p><input type="text"    onChange={(e) => setItemCode(e.target.value)}/></div>
-            <div><p>Item </p><input type="text" onChange={(e) => setItem(e.target.value)} /></div>
-            <div><p>Amount</p><input type="text"  onChange={(e) => setAmount(e.target.value)} /></div>
+            <div><p>Item Code</p><input type="text"   value={bill.bill_items[bill.bill_items.length - 1].item}  onChange={(e) => setItemCode(e.target.value)}/></div>
+            <div><p>Item </p><input type="text" onChange={(e) => setItem(e.target.value)} value={bill.bill_items[bill.bill_items.length - 1].item.Name} /></div>
+            <div><p>Amount</p><input type="text"  onChange={(e) => setAmount(e.target.value)} value={bill.bill_items[bill.bill_items.length - 1].item.Amount} /></div>
             <button onClick={e => handleSubmit(e) }>Save</button>
             </div>
             <div className="table-container">
@@ -142,16 +145,16 @@ axios.post(url, data)
     </div>
             <div className="form3">
             <div>
-            <div><p>Total Items</p><input type="text" /></div>
-            <div><p>SubToal</p><input type="text" /></div>
-            <div><p>Discount%</p><input type="text" /></div>
-            <div><p>Net Total</p><input type="text" /></div>
+            <div><p>Total Items</p><input type="text" value={bill?.total_items} /></div>
+            <div><p>SubToal</p><input type="text" value={bill?.Total_price - (bill?.Total_price * bill?.Discount / 100)}/></div>
+            <div><p>Discount%</p><input type="text" value={bill?.Discount}/></div>
+            <div><p>Net Total</p><input type="text" value={bill?.Total_price}/></div>
             </div>
             
             <div>
-            <div><div><p>Pay Mode</p><input type="text" /></div>
-            <div><p>Advance</p><input type="text" /></div>
-            <div><p>Prepared by</p><input type="text" /></div></div>
+            <div><div><p>Pay Mode</p><input type="text" value={bill?.Paid_Through}/></div>
+            <div><p>Advance</p><input type="text"  value={bill?.Created_by}/></div>
+            <div><p>Prepared by</p><input type="text" value={bill?.Created_by} /></div></div>
             <div>
             <button>Save</button>
             <button>Draft</button>

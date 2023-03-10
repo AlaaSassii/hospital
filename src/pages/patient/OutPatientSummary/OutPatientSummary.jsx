@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsQuestionCircle } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
@@ -7,15 +7,27 @@ import {BiFilterAlt} from 'react-icons/bi' ;
 import './index.scss'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import { MenuPageContext } from '../../../contexts/MenuPage';
+import axios from 'axios';
+import TableRows from './components/TableRows';
 
 const OutPatientSummary = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
 const {MenuPage , setMenuPage} = useContext(MenuPageContext);
+  const [FetchingLoading , setFetchingLoading] = useState(true) ; 
+  const [data , setdata ] = useState("") ;
+
+  useEffect(()=>{
+    setFetchingLoading(true) ; 
+    axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+    .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
+    .catch(err => console.log(err)) ;
+  },[])
 
   useEffect(()=>{
     setCurrentPage("Out Patients Bill Reports ") ; 
     setMenuPage(false)
   },[])
+  if(FetchingLoading) return <h1>Loading...</h1>
   return (
             <div className='OutPatientSummary'>
             <div className='back'>{">back"}</div>
@@ -40,14 +52,8 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-       
+        {data.results.map((element , index) => <TableRows index={index} key={index} {...element}/>)}
+   
         </tbody>
       </table>
     </div>

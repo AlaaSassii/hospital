@@ -51,7 +51,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
           </tr>
         </thead>
         <tbody className="table-body">
-        {data.results.map((element , index) => <TableRows key={index} {...element}/>)}
+        {data.results.map((element , index) => <TableRows index={index} key={index} {...element}/>)}
           {/* Add more rows here */}
         </tbody>
       </table>
