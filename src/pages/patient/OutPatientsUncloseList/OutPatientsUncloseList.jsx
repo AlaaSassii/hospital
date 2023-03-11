@@ -28,7 +28,7 @@ const OutPatientsUncloseList = () => {
             if(loading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientsUncloseList'>
-            <div className="back">{"< back"}</div>
+            <div id='back'>{"< back"}</div>
             <div className='save '>
             <span style={{display:"inline-block", fontWeight:700 , fontSize:17}}>Waiting patient <span style={{color:"#777"}}>(5)</span></span>
             <div className='btn-icons'>

@@ -56,7 +56,7 @@ const OutPatientMaster = () => {
   })
   return (
     <div className='OutPatientMaster'>
-            <div className='back'>{"<Back"}</div>
+            <div id='back'>{"<Back"}</div>
             <form >
             <div className='forms'>
             <div><p>It Code</p><input type="text" value={data1.Name} onChange={e => setdata1({...data1 ,Name1:e.target.value})} /></div>

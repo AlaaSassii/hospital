@@ -26,7 +26,7 @@ const OutPatientReps = () => {
   if (FetchingLoading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientReps'>
-            <div className="back">{"<Back"}</div>
+            <div id='back'>{"<Back"}</div>
             <div className='Bill_reports_outpatient'>
                         <h3>Bill reports</h3>
                         <div>

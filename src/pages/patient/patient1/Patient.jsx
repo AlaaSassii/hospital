@@ -83,7 +83,7 @@ const Patient = () => {
   console.log(calendarTime1 , calendarTime2)
   return (
     <div >
-            <div className="back">{"<Back"}</div>
+            <div id='back'>{"<Back"}</div>
             <div className='save '>
             <h6>Add New Patient</h6>
             <div>

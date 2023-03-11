@@ -26,7 +26,7 @@ const OutPatientWaitingList = () => {
   if (FetchingLoading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientWaitingList'>
-            <div className="back">{"< back"}</div>
+            <div id='back'>{"< back"}</div>
             <div className='save '>
             <span style={{display:"inline-block", fontWeight:700 , fontSize:17}}>Waiting patient <span style={{color:"#ccc"}}>(5)</span></span>
             <div className='btn-icons'>

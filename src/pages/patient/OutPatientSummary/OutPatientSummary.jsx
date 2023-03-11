@@ -30,7 +30,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
   if(FetchingLoading) return <h1>Loading...</h1>
   return (
             <div className='OutPatientSummary'>
-            <div className='back'>{">back"}</div>
+            <div id='back'>{">back"}</div>
             <div className='save '>
             <div className='btn-icons'>
             <button><div><AiOutlinePlus style={{fontSize:25}}/></div></button>

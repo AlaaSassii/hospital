@@ -28,7 +28,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
   if(FetchingLoading) return <h1>Loading...</h1>
   return (
     <div>
-         <div className="back">{"<Back"}</div>
+         <div id='back'>{"<Back"}</div>
             <div className='save '>
             <h6>Bill reports</h6>
             <div className='btn-icons'>

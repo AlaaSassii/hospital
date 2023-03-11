@@ -80,7 +80,7 @@ axios.post(url, data)
   if(loading) return <h2>Loading...</h2>
   return (
     <div className='OutPatientBilling'>
-            <h5 className='back'>{"<Back"}</h5>
+            <h5 id='back'>{"<Back"}</h5>
             <h3>New Bill</h3>
             <div className="form1">
             <div>
