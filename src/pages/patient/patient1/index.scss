@@ -107,3 +107,23 @@
     }
 }
 
+.op_reg{
+            position: relative;
+            >.data{
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            top:100% ; 
+            padding:10px ; 
+            z-index: 10;
+            
+            >div{
+            text-align: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            }
+            }
+            .none{
+                        background-color: red;
+            }
+}

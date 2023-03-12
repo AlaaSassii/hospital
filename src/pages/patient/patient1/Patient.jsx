@@ -20,7 +20,8 @@ const intial_state = {
 
 const Patient = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ; 
-  const {setMenuPage} = useContext(MenuPageContext) 
+  const {setMenuPage} = useContext(MenuPageContext) ;
+  const [hide , setHide] = useState(false) ; 
   // state
   const [data , setData] = useState(intial_state) ;
 
@@ -43,6 +44,7 @@ const Patient = () => {
   const [patientData , setpatientData] = useState([]) ;  
   const [singlePatientData , setsinglePatientData] = useState({}) ;
   const [choose , setChosse] = useState(false) ;
+  const [show , setshow] = useState(false)
   // after we choose 
   useEffect(()=>{
     if(Object.keys(singlePatientData).length > 0 && choose){
@@ -55,10 +57,11 @@ const Patient = () => {
   },[singlePatientData])
   // as we type we make req
   useEffect(()=>{
+    setshow(true)
     console.log('asdasdasdasd')
-    if(opRegNo.length > 1 ){
+    if(opRegNo.length >= 1 ){
       axios(`http://3.110.179.238:8000/Patient/search-outpatients/?Registration_Nos=${opRegNo}`)
-      .then(resp =>{ console.log(resp.data) ; setpatientData(resp.data) ; })
+      .then(resp =>{ console.log(JSON.stringify(resp.data)) ; setpatientData(resp.data) ; })
       .catch(err => console.log(err)) 
     }
   },[opRegNo])
@@ -81,6 +84,7 @@ const Patient = () => {
   // }
   // ,[])
   console.log(calendarTime1 , calendarTime2)
+
   return (
     <div >
             <div id='back'>{"<Back"}</div>
@@ -93,10 +97,11 @@ const Patient = () => {
             </div>
             <div className='grid'>
             <div>
-            <div><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} /></div>
-            {patientData.length > 0 && <>{patientData.map(data => <div onClick={(e) => {setsinglePatientData({Registration_Nos:data.Registration_Nos , ...data.patient});setChosse(true)}} >{data.Registration_Nos}</div>)}</>}
+           
+            <div className='op_reg FORM_ ' onClick={()=>setHide(true)} ><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} />
+            <div className={`items_data_ul`}>{patientData.length > 0 && <>{patientData.map(data => <div onClick={(e) => {setsinglePatientData({Registration_Nos:data.Registration_Nos , ...data.patient});setChosse(true);setHide(false)}} >{data.Registration_Nos}</div>)}</>}</div> </div>
             <div><p>Category</p><select defaultValue={singlePatientData.Category} ><option value="">{singlePatientData.Category}</option></select></div>
-            <div><p>Patient  Name</p><input type="text" value={singlePatientData.Category} /></div>
+            <div><p>Patient  Name</p><input type="text" value={singlePatientData.Name} /></div>
             <div className='calendar-wrapper'>
               <p>Date of birth</p>
               <div className="date">
@@ -106,8 +111,8 @@ const Patient = () => {
 
 
             </div></div>
-            <div><p>Sex</p><div><button className='def-button'>Male</button><button className='def-button'>Female</button></div></div>
-            <div><p>Phone No.</p><input type="text" value={singlePatientData.Category} /></div>
+            <div><p>Sex</p><div><button className='def-button' style={{backgroundColor:`${singlePatientData.Sex === "Male" && '#222831'}`,color:`${singlePatientData.Sex === "Male" && '#fff'}`}}>Male</button><button style={{backgroundColor:`${singlePatientData.Sex === "Female" && '#222831'}`,color:`${singlePatientData.Sex === "Female" && '#fff'}`}} className='def-button'>Female</button></div></div>
+            <div><p>Phone No.</p><input type="text" value={singlePatientData.Mobile_nos} /></div>
             <div><p>Address</p><textarea type="text" value={singlePatientData.Address} rows={7} cols={30} /></div>
             <div><p>Department</p><input type="text" value={singlePatientData.Category} /></div>
             <div><p>Prepared by</p><input type="text" value={singlePatientData.Prepared_by} /></div>
@@ -124,7 +129,7 @@ const Patient = () => {
             </div>
             <div><p>UHID</p><input type="text" value={singlePatientData.uuid} /></div>
             <div><p>Age</p><input type="text" value={singlePatientData.Age} /></div>
-            <div><p>Guardian </p><input type="text" value={singlePatientData.Category} /></div>
+            <div><p>Guardian </p><input type="text" value={singlePatientData.Aadhaar_Nos} /></div>
             <div><p>Marital</p><div><button  className='def-button'>Married</button><button className='def-button'>Unmarried</button></div></div>
             <div><p>Email</p><input type="text" value={singlePatientData.Email} /></div>
             <div><p>Aadhar number</p><input type="text"  value={singlePatientData.Aadhaar_Nos}/></div>
