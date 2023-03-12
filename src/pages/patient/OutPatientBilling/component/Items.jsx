@@ -9,7 +9,7 @@ const Items = ({ITEMS , bill_id , Discount}) => {
   const [itemTable , setItemTable] = useState([]) ; 
   const [loading2 ,setLoading2] = useState(false); 
   const [show , setshow] = useState(false) ; 
-
+  const [finalRes , setFinalresp] = useState({});
   useEffect(()=>{
       if(itemName.length > 1){
         setshow(true);
@@ -27,7 +27,7 @@ const Items = ({ITEMS , bill_id , Discount}) => {
                 "bill_items": itemTable.map(item => {return{"item_id":item.id}})
     }
     axios.post("http://3.110.179.238:8000/Patient/create-Outpatient-billitems" , data)
-      .then(resp => {console.log(resp);setItemTable([])})
+      .then(resp => {console.log(resp);setItemTable([]);setFinalresp(resp.data)})
       .catch(err => console.log(err))
       
   }
@@ -68,16 +68,16 @@ const Items = ({ITEMS , bill_id , Discount}) => {
     </div>
             <div className="form3">
             <div>
-            <div><p>Total Items</p><input type="text"  /></div>
-            <div><p>SubToal</p><input type="text" /></div>
+            <div><p>Total Items</p><input type="text" value={finalRes?.total_items} /></div>
+            <div><p>SubToal</p><input type="text" value={finalRes?.total_items} /></div>
             <div><p>Discount%</p><input type="text" value={Discount} /></div>
-            <div><p>Net Total</p><input type="text" /></div>
+            <div><p>Net Total</p><input type="text"  value={finalRes?.total_items} /></div>
             </div>
             
             <div>
-            <div><div><p>Pay Mode</p><input type="text" /></div>
-            <div><p>Advance</p><input type="text"  /></div>
-            <div><p>Prepared by</p><input type="text"  /></div></div>
+            <div><div><p>Pay Mode</p><input type="text" value={finalRes?.total_items} /></div>
+            <div><p>Advance</p><input type="text" value={finalRes?.total_items}  /></div>
+            <div><p>Prepared by</p><input type="text" value={finalRes?.total_items}  /></div></div>
             <div>
             <button>Save</button>
             <button>Draft</button>

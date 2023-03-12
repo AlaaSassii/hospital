@@ -12,17 +12,32 @@ const OutPatientReps = () => {
             const {setCurrentPage} = useContext(CurrentPageContext) ;
             const [FetchingLoading , setFetchingLoading] = useState(true) ; 
             const [data , setdata ] = useState("") ;
-
+            const [samedata , setsamedata] = useState([])
+            const [searchTerm, setSearchTerm] = useState('');
             useEffect(()=>{
               setFetchingLoading(true) ; 
               axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
-              .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
+              .then(resp =>{ console.log(resp.data); setdata(resp.data.results);setFetchingLoading(false);setsamedata(resp.data.results)})
               .catch(err => console.log(err)) ;
             },[])
             useEffect(()=>{
                         setMenuPage(false) ; 
                         setCurrentPage("Out Patients Bill Reports")
             },[])
+            const handleSearchChange = (event) => {
+              setSearchTerm(event.target.value);
+              filterItems(event.target.value);
+              
+            };
+          
+            const filterItems = (searchTerm) => {
+              const filteredItems = samedata.filter(
+                (item) =>
+                  item.patient[0].Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  item.Patient.toString().includes(searchTerm)
+              );
+              setdata(filteredItems)
+            };
   if (FetchingLoading) return <h1>Loading...</h1>
   return (
     <div className='OutPatientReps'>
@@ -35,6 +50,7 @@ const OutPatientReps = () => {
                         <button><AiOutlineQuestionCircle style={{fontSize:25}}/></button>
                         </div>
             </div>
+            <input type="text" value={searchTerm} onChange={e => handleSearchChange(e)}/>
             <div className="table-container">
                         {/* table needs to have y scroll but there is no more data to show so there is no scroll */}
             <table>
@@ -50,7 +66,7 @@ const OutPatientReps = () => {
           </tr>
         </thead>
         <tbody className="table-body">
-        {data.results.map((element , index) => <TableRows key={index} {...element}/>)}
+        {data.map((element , index) => <TableRows key={index} {...element}/>)}
           
 
         </tbody>

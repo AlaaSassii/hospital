@@ -44,15 +44,49 @@ const Patient = () => {
   const [patientData , setpatientData] = useState([]) ;  
   const [singlePatientData , setsinglePatientData] = useState({}) ;
   const [choose , setChosse] = useState(false) ;
-  const [show , setshow] = useState(false)
+  const [show , setshow] = useState(false) ;
+  const [patientId , setpatientId] = useState(""); 
+  const [direct , setdirect]=useState({value:false , id:""})
+  // states 
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('');
+  const [mobileNos, setMobileNos] = useState('');
+  const [altMobileNos, setAltMobileNos] = useState('');
+  const [email, setEmail] = useState('');
+  const [maritalStatus, setMaritalStatus] = useState('');
+  const [profession, setProfession] = useState('');
+  const [income, setIncome] = useState('');
+  const [aadhaarNos, setAadhaarNos] = useState('');
+  const [doctor, setDoctor] = useState('');
+  const [purpose, setPurpose] = useState('');
+  const [referral, setReferral] = useState('');
+  const [preparedBy, setPreparedBy] = useState('');
+  const [remarks, setRemarks] = useState('');
+  const [status, setStatus] = useState('');
+  const [category, setCategory] = useState('');
+  const [anotherId , setAnotherId] = useState(""); 
   // after we choose 
   useEffect(()=>{
-    if(Object.keys(singlePatientData).length > 0 && choose){
-      setChosse(false) ; 
-      console.log(singlePatientData) ;
-      axios(`http://3.110.179.238:8000/Patient/get-Outpatient/${singlePatientData.Registration_Nos}`)
-                        .then(resp =>{console.log({...resp.data.data , ...singlePatientData});setsinglePatientData(prevData => {return({...resp.data.data , ...prevData})})})
-                        .catch(err => console.log(err))
+    if(Object.keys(singlePatientData).length > 0 ){
+      setAadhaarNos(singlePatientData.Aadhaar_Nos);
+      setAddress(singlePatientData.Address) ; 
+      setAge(singlePatientData.Age) ; 
+      setMobileNos(singlePatientData.Alt_Mobile_nos) ;
+      setEmail(singlePatientData.Email) ; 
+      setIncome(singlePatientData.Income) ; 
+      setMaritalStatus(singlePatientData.Marital_Status) ; 
+      setMobileNos(singlePatientData.Mobile_nos);
+      setName(singlePatientData.Name);
+      setProfession(singlePatientData.Profession) ; 
+      setSex(singlePatientData.Sex); 
+      setAnotherId(singlePatientData.id)
+      // setChosse(false) ; 
+      // console.log(singlePatientData) ;
+      // axios(`http://3.110.179.238:8000/Patient/get-Outpatient/${singlePatientData.Registration_Nos}`)
+      //                   .then(resp =>{console.log({...resp.data.data , ...singlePatientData});setsinglePatientData(prevData => {return({...resp.data.data , ...prevData})})})
+      //                   .catch(err => console.log(err))
     }
   },[singlePatientData])
   // as we type we make req
@@ -65,25 +99,62 @@ const Patient = () => {
       .catch(err => console.log(err)) 
     }
   },[opRegNo])
-  // useEffect(()=>{
-  //   const data = {
-      
-  //     Patient: 1,
-  //     Doctor: 1,
-  //     Purpose: "Consulation",
-  //     Referral: "someone",
-  //     Prepared_by: "don't care",
-  //     Remarks: "he is not good",
-  //     Status: "Waiting_Patient",
-  //     Category: "New Patient",
-  //   };
-    
-  //   axios.post('http://3.110.179.238:8000/Patient/create-Outpatient', data)
-  //     .then(response => console.log(response.data))
-  //     .catch(error => console.error(error));
-  // }
-  // ,[])
-  console.log(calendarTime1 , calendarTime2)
+  useEffect(()=>{
+    setdirect({value:false , id:""})
+    if(patientId.length >= 1){
+      axios(`http://3.110.179.238:8000/Patient/Patient-List-View?UUID=${patientId}`)
+    .then(resp => {console.log(resp.data.results); setsinglePatientData(resp.data.results[0]); setdirect({value:true , id:patientId}) })
+    .catch(err => {console.log(err)})
+    }
+  },[patientId]) ; 
+  useEffect(()=>{
+
+  },[])
+  const createPatient = () =>{
+    if(name &&address  &&age &&sex &&mobileNos &&altMobileNos &&email &&maritalStatus &&profession &&income &&aadhaarNos && doctor && purpose && referral && preparedBy && remarks && status&& category){
+      if(anotherId){
+        axios.post("http://3.110.179.238:8000/Patient/create-Outpatient" , {Patient:anotherId ,
+        Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
+      })
+          .then(resp => {console.log(resp.data);  })
+          .catch(err => console.log(err))
+      }
+      else{
+        const data = {
+          Name:name, 
+          Address:address,
+          Age:Number(age),
+          Sex:sex,
+          Mobile_nos:Number(mobileNos),
+          Alt_Mobile_nos:Number(altMobileNos),
+          Email:email,
+          Marital_Status:maritalStatus,
+          Profession:profession,
+          Income:Number(income),
+          Aadhaar_Nos:aadhaarNos.toString()
+        };
+        let id = "" ; 
+        axios.post('http://3.110.179.238:8000/Patient/create-patient', data)
+          .then(response => {console.log(response.data); id=response.data.id ; 
+            axios.post("http://3.110.179.238:8000/Patient/create-Outpatient" , {Patient:response.data.id  ,
+            Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
+          }).then(resp => { console.log(resp.data ); })
+            .catch(err => {console.log(err);console.log({Patient:id ,
+              Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
+            })}) 
+          
+          })
+          .catch(error => console.log({error,data}));
+        
+      }
+    }
+    else{
+      alert("continue data");
+      console.log(singlePatientData)
+    }
+  }
+
+  console.log(status)
 
   return (
     <div >
@@ -92,16 +163,17 @@ const Patient = () => {
             <h6>Add New Patient</h6>
             <div>
             <button className='def-button'>Cancel</button>
-            <button className='def-button'>Save</button>
+            <button className='def-button' onClick={createPatient}>Save</button>
             </div>
             </div>
             <div className='grid'>
             <div>
+            <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>setpatientId(e.target.value)}/></div>
            
             <div className='op_reg FORM_ ' onClick={()=>setHide(true)} ><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} />
             <div className={`items_data_ul`}>{patientData.length > 0 && <>{patientData.map(data => <div onClick={(e) => {setsinglePatientData({Registration_Nos:data.Registration_Nos , ...data.patient});setChosse(true);setHide(false)}} >{data.Registration_Nos}</div>)}</>}</div> </div>
-            <div><p>Category</p><select defaultValue={singlePatientData.Category} ><option value="">{singlePatientData.Category}</option></select></div>
-            <div><p>Patient  Name</p><input type="text" value={singlePatientData.Name} /></div>
+            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="Review PatientReferral">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
+            <div><p>Patient  Name</p><input type="text" value={name} onChange={e => setName(e.target.value)}/></div>
             <div className='calendar-wrapper'>
               <p>Date of birth</p>
               <div className="date">
@@ -111,11 +183,13 @@ const Patient = () => {
 
 
             </div></div>
-            <div><p>Sex</p><div><button className='def-button' style={{backgroundColor:`${singlePatientData.Sex === "Male" && '#222831'}`,color:`${singlePatientData.Sex === "Male" && '#fff'}`}}>Male</button><button style={{backgroundColor:`${singlePatientData.Sex === "Female" && '#222831'}`,color:`${singlePatientData.Sex === "Female" && '#fff'}`}} className='def-button'>Female</button></div></div>
-            <div><p>Phone No.</p><input type="text" value={singlePatientData.Mobile_nos} /></div>
-            <div><p>Address</p><textarea type="text" value={singlePatientData.Address} rows={7} cols={30} /></div>
-            <div><p>Department</p><input type="text" value={singlePatientData.Category} /></div>
-            <div><p>Prepared by</p><input type="text" value={singlePatientData.Prepared_by} /></div>
+            <div><p>Sex</p><div><button  onClick={e => setSex("Male")} className='def-button' style={{backgroundColor:`${sex === "Male" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex=== "Male" && '#fff'}`}}>Male</button><button onClick={e => setSex("Female")} style={{backgroundColor:`${sex === "Female" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex === "Female" && '#fff'}`}} className='def-button'>Female</button></div></div>
+            <div><p>Phone No.</p><input type="text" value={mobileNos}  onChange={e => setMobileNos(e.target.value)}/></div>
+            <div><p>Address</p><textarea type="text" value={address} onChange={e => setAddress(e.target.value)} rows={7} cols={30} /></div>
+            <div><p>Profession</p><select  onChange={e => setProfession(e.target.value) } defaultValue={profession} ><option value="Nurse">Nurse</option><option  value="Doctor">Doctor</option></select></div>
+
+            <div><p>Income</p><input type="text" onChange={e => setIncome( e.target.value)} value={income} /></div>
+            <div><p>Prepared by</p><input type="text" value={preparedBy} onChange={e => setPreparedBy(e.target.value)}  /></div>
             </div>
             <div>
             <div className='calendar-wrapper'>
@@ -127,15 +201,18 @@ const Patient = () => {
 
             </div>
             </div>
-            <div><p>UHID</p><input type="text" value={singlePatientData.uuid} /></div>
-            <div><p>Age</p><input type="text" value={singlePatientData.Age} /></div>
-            <div><p>Guardian </p><input type="text" value={singlePatientData.Aadhaar_Nos} /></div>
-            <div><p>Marital</p><div><button  className='def-button'>Married</button><button className='def-button'>Unmarried</button></div></div>
-            <div><p>Email</p><input type="text" value={singlePatientData.Email} /></div>
-            <div><p>Aadhar number</p><input type="text"  value={singlePatientData.Aadhaar_Nos}/></div>
-            <div><p>Diagnosis</p><input type="text" value={singlePatientData.Category} /></div>
-            <div><p>Doctor</p><input type="text"     value={singlePatientData.Doctor} onChange={e => e.target.value ? changeValue({Doctor:1}) : changeValue({Doctor:0})} /></div>
-            <div><p>Remarks/ Diagnosis</p><input      value={singlePatientData.Remarks}  type="text" onChange={e => changeValue({Remarks:e.target.value})} /></div>
+            <div><p>UHID</p><input type="text"  /></div>
+            <div><p>Age</p><input type="text" value={age} onChange={e => setAge(e.target.value)} /></div>
+            <div><p>Marital</p><div><button  onClick={e => setMaritalStatus("Married")} style={{backgroundColor:`${maritalStatus=== "Married" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${maritalStatus === "Married" && '#fff'}`}}   className='def-button'>Married</button><button  onClick={e => setMaritalStatus("Divorced")} style={{backgroundColor:`${maritalStatus === "Divorced" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${maritalStatus === "Divorced" && '#fff'}`}} className='def-button'>Divorced</button></div></div>
+            <div><p>Email</p><input type="text" value={email} onChange={e => setEmail(e.target.value)} /></div>
+            <div><p>Alternate Mobile Number </p><input type="text"  value={ altMobileNos  }  onChange={e => setAltMobileNos(Number(e.target.value))}/></div>
+            <div><p>Aadhar number</p><input type="text"  value={ aadhaarNos  }  onChange={e => setAadhaarNos(e.target.value)}/></div>
+            <div><p>Doctor</p><input type="number"  onChange={e => setDoctor(e.target.value)}   value={doctor}  /></div>
+            <div><p>Remarks/ Diagnosis</p><input      value={remarks}  type="text" onChange={e => setRemarks(e.target.value)} /></div>
+            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } defaultValue={status} ><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select></div>
+            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } defaultValue={purpose} ><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
+
+            <div><p>Referral</p><input type="text" onChange={e => setReferral(e.target.value)} value={referral} /></div>
 
             </div>
             </div>
