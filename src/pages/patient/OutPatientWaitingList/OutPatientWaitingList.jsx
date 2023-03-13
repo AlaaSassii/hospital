@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { BiFilterAlt } from 'react-icons/bi';
 import { BsQuestionCircle } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
+import { formatDateTime } from '../../../assets/functions';
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import { MenuPageContext } from '../../../contexts/MenuPage';
 import TableRows from './Component/TableRows';
@@ -13,17 +14,34 @@ const OutPatientWaitingList = () => {
             const {setCurrentPage} = useContext(CurrentPageContext) ;
             const [FetchingLoading , setFetchingLoading] = useState(true) ; 
             const [data , setdata ] = useState("") ;
+            const [samedata , setsamedata] = useState([])
+            const [searchTerm, setSearchTerm] = useState('');
+            const [name, setName] = useState('');
+            const [consultant, setconsultant] = useState('');
+            const [status, setstatus] = useState('');
+            const [dateTime , setdateTime] = useState('') ; 
+            useEffect(()=>{
+              let globalarray = samedata ; 
+              globalarray = samedata.filter(item => item.patient[0].Name.toLowerCase().includes(name.toLowerCase())) ; 
+              globalarray = globalarray.filter(item => item.doctor["Name"].toLowerCase().includes(consultant.toLowerCase())) ; 
+              globalarray = globalarray.filter(item => item.Status.toLowerCase().includes(status.toLowerCase())) ; 
+              globalarray = globalarray.filter(item => formatDateTime(item.Created).split(" ")[0].toLowerCase().includes(dateTime.toLowerCase())) ; 
+              console.log({globalarray})
+              setdata(globalarray)
+          },[name ,consultant ,status])
+          
             useEffect(()=>{
                         setMenuPage(false) ; 
                         setCurrentPage("Out Patients Waiting List")
             },[])
             useEffect(()=>{
-              setFetchingLoading(true) ; 
-              axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
-              .then(resp =>{ console.log(resp.data) ; setdata(resp.data); setFetchingLoading(false)})
-              .catch(err => console.log(err)) ;
-            },[]) ; 
-  if (FetchingLoading) return <h1>Loading...</h1>
+              if(name || consultant || status ||dateTime ){
+                axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?patient_name=${name}&doctor=${consultant}&Status=${status}`)
+              .then(resp => {console.log(resp.data.results);setdata(resp.data.results)})
+              .catch(err => console.log(err))
+              }
+            },[name ,consultant ,status ])
+            console.log(samedata)
   return (
     <div className='OutPatientWaitingList'>
             <div id='back'>{"< back"}</div>
@@ -37,6 +55,11 @@ const OutPatientWaitingList = () => {
             </div>
 
             </div>
+            <input type="text" placeholder='Name' onChange={e => setName(e.target.value)} />
+            <input type="text" placeholder='Consultut' onChange={e => setconsultant(e.target.value)} />
+            <select onChange={e => setstatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select>
+            <input type="text" placeholder='MM/dd/yyyy' onChange={e => setdateTime(e.target.value)}/>
+
             <div className="table-container">
       <table>
         <thead>
@@ -49,7 +72,7 @@ const OutPatientWaitingList = () => {
           </tr>
         </thead>
         <tbody className="table-body">
-        {data?.results?.map((element , index) => <TableRows key={index} index={index}{...element}/>)}
+        {data.length  > 0 ?data?.map((element , index) => <TableRows key={index} index={index}{...element}/>) : <tr><td></td><td></td><td>No data to show</td><td></td><td></td><td></td></tr>}
           {/* </tr>  <tr>
             <td>5</td>
             <td>Paul christian</td>

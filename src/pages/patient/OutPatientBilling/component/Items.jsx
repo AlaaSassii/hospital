@@ -27,7 +27,7 @@ const Items = ({ITEMS , bill_id , Discount}) => {
                 "bill_items": itemTable.map(item => {return{"item_id":item.id}})
     }
     axios.post("http://3.110.179.238:8000/Patient/create-Outpatient-billitems" , data)
-      .then(resp => {console.log(resp);setItemTable([]);setFinalresp(resp.data)})
+      .then(resp => {console.log(resp.data);setItemTable([]);setFinalresp(resp.data)})
       .catch(err => console.log(err))
       
   }
@@ -68,16 +68,16 @@ const Items = ({ITEMS , bill_id , Discount}) => {
     </div>
             <div className="form3">
             <div>
-            <div><p>Total Items</p><input type="text" value={finalRes?.total_items} /></div>
-            <div><p>SubToal</p><input type="text" value={finalRes?.total_items} /></div>
-            <div><p>Discount%</p><input type="text" value={Discount} /></div>
-            <div><p>Net Total</p><input type="text"  value={finalRes?.total_items} /></div>
+            <div><p>Total Items</p><input type="text" value={finalRes?.total_items} readOnly /></div>
+            <div><p>SubToal</p><input type="text" value={finalRes?.Total_price}  readOnly/></div>
+            <div><p>Discount%</p><input type="text" value={finalRes?.Discount} readOnly/></div>
+            <div><p>Net Total</p><input type="text"  value={finalRes?.discounted_price} readOnly/></div>
             </div>
             
             <div>
-            <div><div><p>Pay Mode</p><input type="text" value={finalRes?.total_items} /></div>
-            <div><p>Advance</p><input type="text" value={finalRes?.total_items}  /></div>
-            <div><p>Prepared by</p><input type="text" value={finalRes?.total_items}  /></div></div>
+            <div><div><p>Pay Mode</p><input type="text" value={finalRes?.Paid_Through}readOnly /></div>
+            <div><p>Advance</p><input type="text" value={finalRes?.total_items}readOnly  /></div>
+            <div><p>Prepared by</p><input type="text" value={finalRes?.Created_by} readOnly /></div></div>
             <div>
             <button>Save</button>
             <button>Draft</button>

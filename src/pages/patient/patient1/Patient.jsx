@@ -67,21 +67,25 @@ const Patient = () => {
   const [status, setStatus] = useState('');
   const [category, setCategory] = useState('');
   const [anotherId , setAnotherId] = useState(""); 
+  const [patientIDS , setpatientIDS] = useState([]) ; 
   // after we choose 
   useEffect(()=>{
-    if(Object.keys(singlePatientData).length > 0 ){
-      setAadhaarNos(singlePatientData.Aadhaar_Nos);
-      setAddress(singlePatientData.Address) ; 
-      setAge(singlePatientData.Age) ; 
-      setMobileNos(singlePatientData.Alt_Mobile_nos) ;
-      setEmail(singlePatientData.Email) ; 
-      setIncome(singlePatientData.Income) ; 
-      setMaritalStatus(singlePatientData.Marital_Status) ; 
-      setMobileNos(singlePatientData.Mobile_nos);
-      setName(singlePatientData.Name);
-      setProfession(singlePatientData.Profession) ; 
-      setSex(singlePatientData.Sex); 
-      setAnotherId(singlePatientData.id)
+    if(singlePatientData){
+      if(Object.keys(singlePatientData).length > 0 ){
+        setAadhaarNos(singlePatientData.Aadhaar_Nos);
+        setAddress(singlePatientData.Address) ; 
+        setAge(singlePatientData.Age) ; 
+        setMobileNos(singlePatientData.Alt_Mobile_nos) ;
+        setEmail(singlePatientData.Email) ; 
+        setIncome(singlePatientData.Income) ; 
+        setMaritalStatus(singlePatientData.Marital_Status) ; 
+        setMobileNos(singlePatientData.Mobile_nos);
+        setName(singlePatientData.Name);
+        setProfession(singlePatientData.Profession) ; 
+        setSex(singlePatientData.Sex); 
+        setAnotherId(singlePatientData.id)
+    }
+   
       // setChosse(false) ; 
       // console.log(singlePatientData) ;
       // axios(`http://3.110.179.238:8000/Patient/get-Outpatient/${singlePatientData.Registration_Nos}`)
@@ -94,8 +98,8 @@ const Patient = () => {
     setshow(true)
     console.log('asdasdasdasd')
     if(opRegNo.length >= 1 ){
-      axios(`http://3.110.179.238:8000/Patient/search-outpatients/?Registration_Nos=${opRegNo}`)
-      .then(resp =>{ console.log(JSON.stringify(resp.data)) ; setpatientData(resp.data) ; })
+      axios(`http://3.110.179.238:8000/Patient/Patient-List-View?Registration_nos=${opRegNo}`)
+      .then(resp =>{ console.log(resp.data) ; setpatientData(resp.data.results) ; })
       .catch(err => console.log(err)) 
     }
   },[opRegNo])
@@ -103,7 +107,7 @@ const Patient = () => {
     setdirect({value:false , id:""})
     if(patientId.length >= 1){
       axios(`http://3.110.179.238:8000/Patient/Patient-List-View?UUID=${patientId}`)
-    .then(resp => {console.log(resp.data.results); setsinglePatientData(resp.data.results[0]); setdirect({value:true , id:patientId}) })
+    .then(resp => {console.log(resp.data.results);setpatientIDS(resp.data.results) ; setdirect({value:true , id:patientId}) })
     .catch(err => {console.log(err)})
     }
   },[patientId]) ; 
@@ -169,10 +173,12 @@ const Patient = () => {
             <div className='grid'>
             <div>
             <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>setpatientId(e.target.value)}/></div>
-           
+            {patientIDS.length > 0 && <ul>
+              {patientIDS.map((item , index) => <li key={index} onClick={()=>setsinglePatientData({...singlePatientData , ...item })}>{item.uuid}</li>)}
+              </ul>}
             <div className='op_reg FORM_ ' onClick={()=>setHide(true)} ><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} />
-            <div className={`items_data_ul`}>{patientData.length > 0 && <>{patientData.map(data => <div onClick={(e) => {setsinglePatientData({Registration_Nos:data.Registration_Nos , ...data.patient});setChosse(true);setHide(false)}} >{data.Registration_Nos}</div>)}</>}</div> </div>
-            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="Review PatientReferral">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
+            <div className={`items_data_ul`}>{patientData.length > 0 && <>{patientData.map(item => <div onClick={(e) => {setsinglePatientData({...singlePatientData , ...item });setChosse(true);setHide(false)}} >{item.uuid}</div>)}</>}</div> </div>
+            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
             <div><p>Patient  Name</p><input type="text" value={name} onChange={e => setName(e.target.value)}/></div>
             <div className='calendar-wrapper'>
               <p>Date of birth</p>
@@ -221,3 +227,4 @@ const Patient = () => {
 }
 
 export default Patient
+// {Registration_Nos:data.Registration_Nos , ...data.patient}

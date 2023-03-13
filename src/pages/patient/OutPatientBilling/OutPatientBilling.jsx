@@ -22,7 +22,7 @@ const OutPatientBilling = () => {
   const [ITEMS , SETITEMS] = useState([]) ;
   useEffect(()=>{
     setloading(true) ; 
-    axios("http://3.110.179.238:8000/Patient/Search-OutPatientItems?uuid=33")
+    axios("http://3.110.179.238:8000/Patient/OutPatient-Items-List")
     .then(resp =>{ SETITEMS(resp.data.results);setloading(false) ; })
     .catch(err => console.log(err))
   },[])
@@ -36,19 +36,21 @@ const OutPatientBilling = () => {
   },[])      
 
             useEffect(()=>{
-              axios.post('http://3.110.179.238:8000/Patient/create-Outpatient-bill', {
-                "OutPatient": Number(number),
-                "Paid": false,
-                "Created_by": "someone",
-                "Discount":10})
-              .then(function (response) {
-                console.log(response.data);
-                setbillData(response.data)
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-              
+                if(number){
+                  axios.post('http://3.110.179.238:8000/Patient/create-Outpatient-bill', {
+                    "OutPatient": Number(number),
+                    "Paid": false,
+                    "Created_by": "someone",
+                    "Discount":10})
+                  .then(function (response) {
+                    console.log(response.data);
+                    setbillData(response.data)
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                  
+                }
             },[number])
   if(loading) return <h2>Loading...</h2>
   return (

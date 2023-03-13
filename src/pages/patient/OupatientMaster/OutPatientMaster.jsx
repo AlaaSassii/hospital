@@ -18,11 +18,16 @@ const initial_state ={
 
 const OutPatientMaster = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
-  const {setMenuPage} = useContext(MenuPageContext) 
+  const {setMenuPage} = useContext(MenuPageContext) ;
   const [data1 , setdata1] = useState({Name: '',
   Amount: 0,
   Description: '',
   Category: 1})
+  const [itemCode, setItemCode] = useState('');
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState("");
+  const [category, setcategory] = useState("");
+
   const handleSubmit = () => {
     const {Name , Amount , Description ,Category } = data1
     axios.post('http://3.110.179.238:8000/Patient/create-outpatient-items', {
@@ -43,7 +48,7 @@ const OutPatientMaster = () => {
   });
   }
   // states 
-  const [data , setData] = useState(initial_state) ;
+  const [data , setdata] = useState([]) ;
 
   useEffect(()=>{
     setCurrentPage("Out Pateint Master") ; 
@@ -54,6 +59,13 @@ const OutPatientMaster = () => {
     .then(resp => console.log(resp.data))
     .catch(err => console.log(err))
   })
+  useEffect(()=>{
+    if(itemCode || description || amount || category){
+      axios(`http://3.110.179.238:8000/Patient/OutPatient-Items-List?name=${description}&Category=${category}&uuid=${itemCode}`)
+    .then(resp => {console.log(resp.data.results);setdata(resp.data.results)})
+    .catch(err => console.log(err))
+    }
+  },[itemCode ,description ,amount , category ])
   return (
     <div className='OutPatientMaster'>
             <div id='back'>{"<Back"}</div>
@@ -73,6 +85,11 @@ const OutPatientMaster = () => {
             </div>
             </div>
             </form>
+            <input type="text" placeholder='Item Code	' value={itemCode} onChange={(event) => setItemCode(event.target.value)} />
+            <input type="text" placeholder='Description' value={description} onChange={(event) => setDescription(event.target.value)} />
+            <input type="text" placeholder='Amount'   value={amount} onChange={(event) => setAmount(event.target.value)}/>
+            <select onChange={e => setcategory(e.target.value) } defaultValue={category} ><option value="">category</option><option value="Scan">Scan</option><option value="Something">Something</option></select>
+
             <div className="table-container">
             <table>
         <thead>
@@ -80,30 +97,11 @@ const OutPatientMaster = () => {
             <th>Item Code</th>
             <th>Description</th>
             <th>Amount</th>
+            <th>Category</th>
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>54125415</td>
-            <td>Xray</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <td>54125415</td>
-            <td></td>
-            <td>2000</td>
-            </tr>
-            <tr>
-            <td>54125415</td>
-            <td></td>
-            <td>2000</td>
-            </tr>
-            <tr>
-            <td>54125415</td>
-            <td></td>
-            <td>2000</td>
-            </tr>
-
+          {data.length > 0 ? data.map(item => <tr><td>{item.UUID}</td> <td>{item.Description}</td>  <td>{item.Amount}</td><td>{item.Category}</td></tr>): <tr><td></td><td>No data to show</td><td></td><td></td><td></td></tr>}
         </tbody>
       </table>
       </div>

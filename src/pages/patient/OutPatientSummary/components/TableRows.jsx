@@ -8,7 +8,6 @@ const TableRows = ({bill , index }) => {
             <tr>
             <td>{index}</td>
             <td>{}</td>
-            <td>{}</td>
             <td>{bill[0]?.Created_by}</td>
             <td>{bill[0]?.total_items  }</td>
           </tr>

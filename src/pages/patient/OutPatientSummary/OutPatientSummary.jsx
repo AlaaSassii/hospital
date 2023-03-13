@@ -46,7 +46,6 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
           <tr>
             <th>{"< Filter >"}</th>
             <th>Cash / Card</th>
-            <th>Credit</th>
             <th>Other</th>
             <th>Total</th>
           </tr>
