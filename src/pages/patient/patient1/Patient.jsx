@@ -103,8 +103,8 @@ const Patient = () => {
     if(opRegNo.length >= 1 ){
       setshowReg(true)
       console.log({length:opRegNo.length })
-      axios(`http://3.110.179.238:8000/Patient/Patient-List-View?Registration_nos=${opRegNo}`)
-      .then(resp =>{ console.log(resp.data) ; setpatientData(resp.data.results) ; })
+      axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?Registration_Nos=${opRegNo}`)
+      .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
       .catch(err => console.log(err)) 
     }
   },[opRegNo])
@@ -168,26 +168,32 @@ const Patient = () => {
   }
 
   console.log(status)
-
+  const takeFromReg = (element ) =>{
+    const { patient} = element ; 
+    const {Aadhaar_Nos , Address , Age ,Alt_Mobile_nos , Created , Email , Income ,Marital_Status , Mobile_nos , Name , Profession , Sex , id , uuid , } =patient[0] ; 
+    const data  = {Aadhaar_Nos , Address , Age ,Alt_Mobile_nos , Created , Email , Income ,Marital_Status , Mobile_nos , Name , Profession , Sex , id , uuid } ;
+    setsinglePatientData({...singlePatientData , ...data }) }
   return (
     <div >
             <div id='back'>{"<Back"}</div>
             <div className='save '>
             <h6>Add New Patient</h6>
             <div>
-            <button className='def-button'>Cancel</button>
+            <button className='def-button' onClick={()=>setsinglePatientData({})}>Cancel</button>
             <button className='def-button' onClick={createPatient}>Save</button>
             </div>
             </div>
             <div className='grid'>
             <div>
-            <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>setpatientId(e.target.value)}/></div>
+            <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>{ !(opRegNo.length > 0) && setpatientId(e.target.value)}}/></div>
             {showidoatient && <>{patientIDS.length > 0 && <ul>
-              {patientIDS.map((item , index) => <li key={index} onClick={()=>{setsinglePatientData({...singlePatientData , ...item });setshowidoatient(false)}}>{item.uuid}</li>)}
+              {patientIDS.map((item , index) => <li key={index} onClick={()=>{  setsinglePatientData({...singlePatientData , ...item });setshowidoatient(false)}}>{item.uuid}</li>)}
               </ul>}</>}
-            <div className='op_reg FORM_ ' onClick={()=>setHide(true)} ><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} />
-            {showReg && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {setsinglePatientData({...singlePatientData , ...item });setChosse(true);setshowReg(false)}} >{item.uuid}</div>)}</></div>}</>} </div>
-            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
+            <div className='op_reg FORM_ ' onClick={()=>setHide(true)} >
+            <p>OP Reg. No</p>
+            <input type="text" value={opRegNo} onChange={e => { !(patientId.length > 0) && setOpRegNo(e.target.value)}} />
+            {showReg && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {takeFromReg(item);setshowReg(false)}} >{item.Registration_Nos}</div>)}</></div>}</>} </div>
+            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="">Category</option><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
             <div><p>Patient  Name</p><input type="text" value={name} onChange={e => setName(e.target.value)}/></div>
             <div className='calendar-wrapper'>
               <p>Date of birth</p>
@@ -201,7 +207,7 @@ const Patient = () => {
             <div><p>Sex</p><div><button  onClick={e => setSex("Male")} className='def-button' style={{backgroundColor:`${sex === "Male" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex=== "Male" && '#fff'}`}}>Male</button><button onClick={e => setSex("Female")} style={{backgroundColor:`${sex === "Female" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex === "Female" && '#fff'}`}} className='def-button'>Female</button></div></div>
             <div><p>Phone No.</p><input type="text" value={mobileNos}  onChange={e => setMobileNos(e.target.value)}/></div>
             <div><p>Address</p><textarea type="text" value={address} onChange={e => setAddress(e.target.value)} rows={7} cols={30} /></div>
-            <div><p>Profession</p><select  onChange={e => setProfession(e.target.value) } defaultValue={profession} ><option value="Nurse">Nurse</option><option  value="Doctor">Doctor</option></select></div>
+            <div><p>Profession</p><select  onChange={e => setProfession(e.target.value) } defaultValue={profession} ><option value="Profession">Profession</option><option value="Nurse">Nurse</option><option  value="Doctor">Doctor</option></select></div>
 
             <div><p>Income</p><input type="text" onChange={e => setIncome( e.target.value)} value={income} /></div>
             <div><p>Prepared by</p><input type="text" value={preparedBy} onChange={e => setPreparedBy(e.target.value)}  /></div>
@@ -224,8 +230,8 @@ const Patient = () => {
             <div><p>Aadhar number</p><input type="text"  value={ aadhaarNos  }  onChange={e => setAadhaarNos(e.target.value)}/></div>
             <div><p>Doctor</p><input type="number"  onChange={e => setDoctor(e.target.value)}   value={doctor}  /></div>
             <div><p>Remarks/ Diagnosis</p><input      value={remarks}  type="text" onChange={e => setRemarks(e.target.value)} /></div>
-            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } defaultValue={status} ><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select></div>
-            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } defaultValue={purpose} ><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
+            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select></div>
+            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } defaultValue={purpose} ><option value="">Purpose</option><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
 
             <div><p>Referral</p><input type="text" onChange={e => setReferral(e.target.value)} value={referral} /></div>
 

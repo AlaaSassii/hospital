@@ -21,7 +21,7 @@ const Items = ({ITEMS , bill_id , Discount}) => {
   },[itemName])
   console.log({items , items2}) ;
   const applyFunction = () => {
-    console.log('3asbaaaaaa')
+    console.log(bill_id)
     const data = {
       "bill_id":bill_id,
                 "bill_items": itemTable.map(item => {return{"item_id":item.id}})

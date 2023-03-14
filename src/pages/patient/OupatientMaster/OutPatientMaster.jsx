@@ -22,7 +22,7 @@ const OutPatientMaster = () => {
   const [data1 , setdata1] = useState({Name: '',
   Amount: 0,
   Description: '',
-  Category: 1})
+  Category: ''})
   const [itemCode, setItemCode] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState("");
@@ -54,15 +54,12 @@ const OutPatientMaster = () => {
     setCurrentPage("Out Pateint Master") ; 
     setMenuPage(false) ; 
   },[])
-  useEffect(()=>{
-    axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
-    .then(resp => console.log(resp.data))
-    .catch(err => console.log(err))
-  })
+
   useEffect(()=>{
     if(itemCode || description || amount || category){
-      axios(`http://3.110.179.238:8000/Patient/OutPatient-Items-List?name=${description}&Category=${category}&uuid=${itemCode}`)
-    .then(resp => {console.log(resp.data.results);setdata(resp.data.results)})
+      axios(`http://3.110.179.238:8000/Patient/OutPatient-Items-List?Category=${category}&uuid=${itemCode}`)
+    .then(resp => {console.log(resp.data.results);setdata(resp.data.results);
+    })
     .catch(err => console.log(err))
     }
   },[itemCode ,description ,amount , category ])
@@ -71,11 +68,11 @@ const OutPatientMaster = () => {
             <div id='back'>{"<Back"}</div>
             <form >
             <div className='forms'>
-            <div><p>It Code</p><input type="text" value={data1.Name} onChange={e => setdata1({...data1 ,Name1:e.target.value})} /></div>
+            <div><p>It Code</p><input type="text" value={data1.Name} onChange={e => setdata1({...data1 ,Name:e.target.value})} /></div>
             <div><p>Description</p><input type="text"value={data1.Description} onChange={e => setdata1({...data1 ,Description:e.target.value})}/></div>
-            <div><p>Category</p><input type="text" value={data1.Category } onChange={e => setdata1({...data1 ,Category:Number(e.target.value)})}/></div>
+            <div><p>Category</p><select  onChange={e => setdata1({...data1 ,Category:e.target.value})}><option value="">category</option><option value="Scan">Scan</option><option value="Something">Something</option></select></div>
             <div><p>Amount</p><input type="text" value={data1.Amount} onChange={e => setdata1({...data1 ,Amount:Number(e.target.value)})}/></div>
-            <button>Save</button>
+            <button type='button' onClick={() => handleSubmit()}>Save</button>
             </div>
             <div>
             <h3>Total Patients <span>(487)</span></h3>

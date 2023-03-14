@@ -8,6 +8,7 @@ import { CurrentPageContext } from '../../../contexts/CurrentPage'
 import { MenuPageContext } from '../../../contexts/MenuPage'
 import axios from 'axios'
 import Items from './component/Items'
+import { formatDateTime } from '../../../assets/functions'
 const OutPatientBilling = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   const {setMenuPage} = useContext(MenuPageContext) 
@@ -20,6 +21,9 @@ const OutPatientBilling = () => {
   const [showCalender2 , setShowCalender2] = useState(false) ; 
   const [number , setnumber] = useState('')
   const [ITEMS , SETITEMS] = useState([]) ;
+  const [show , setShow] = useState(false) ; 
+  const [patientData , setpatientData] = useState([]) ;  
+
   useEffect(()=>{
     setloading(true) ; 
     axios("http://3.110.179.238:8000/Patient/OutPatient-Items-List")
@@ -52,6 +56,19 @@ const OutPatientBilling = () => {
                   
                 }
             },[number])
+
+
+            useEffect(()=>{
+              if(number.length === 0){
+                setShow(false)
+              }
+              if(number.length >= 1 ){
+                setShow(true)
+                axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?Registration_Nos=${number}`)
+                .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
+                .catch(err => console.log(err)) 
+              }
+            },[number])
   if(loading) return <h2>Loading...</h2>
   return (
     <div className='OutPatientBilling'>
@@ -59,9 +76,13 @@ const OutPatientBilling = () => {
             <h3>New Bill</h3>
             <div className="form1">
             <div>
-            <div><p>Bill No</p><input type="text"  value={billData?.a} /></div>
+            <div><p>Bill No</p><input type="text"  value={billData?.bill?.[0]?.id} /></div>
             <div><p>outpatient number</p><input type="text"  value={number} onChange={e => setnumber(e.target.value)} /></div>
-            <div><p>Patient  Name</p><input type="text"  value={billData?.Created_by}/></div>
+            <div>
+            {show && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {setShow(false);setbillData({...item})}} >{item.Registration_Nos}</div>)}</></div>}</>} 
+
+            </div>
+            <div><p>Patient  Name</p><input type="text"  value={billData?.patient?.[0]?.Name}/></div>
             </div>
 
             <div>
@@ -69,7 +90,7 @@ const OutPatientBilling = () => {
               <p>Date</p>
               <div className="date">
                 <button className="btn-date" onClick={()=>setShowCalender1(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={billData?.Created_by}    />
+                <input type="text" readOnly value={formatDateTime(billData?.Created).split(" ")[0]}    />
               {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
             </div>
             </div>
@@ -77,7 +98,7 @@ const OutPatientBilling = () => {
           
             </div>
             </div>
-            <Items ITEMS={ITEMS} bill_id={billData.id} Discount={billData.Discount}/>
+            <Items ITEMS={ITEMS} bill_id={billData.bill?.[0]?.id} Discount={billData.Discount}/>
           
 </div>
   )

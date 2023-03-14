@@ -57,7 +57,7 @@ const OutPatientWaitingList = () => {
             </div>
             <input type="text" placeholder='Name' onChange={e => setName(e.target.value)} />
             <input type="text" placeholder='Consultut' onChange={e => setconsultant(e.target.value)} />
-            <select onChange={e => setstatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select>
+            <select onChange={e => setstatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="Waiting_Patient">waiting patient</option><option value="Completed">Completed</option></select>
             <input type="text" placeholder='MM/dd/yyyy' onChange={e => setdateTime(e.target.value)}/>
 
             <div className="table-container">
