@@ -73,28 +73,6 @@ const OutPatientWaitingList = () => {
         </thead>
         <tbody className="table-body">
         {data.length  > 0 ?data?.map((element , index) => <TableRows key={index} index={index}{...element}/>) : <tr><td></td><td></td><td>No data to show</td><td></td><td></td><td></td></tr>}
-          {/* </tr>  <tr>
-            <td>5</td>
-            <td>Paul christian</td>
-            <td>Gonorrhea</td>
-            <td><span className='status_awaiting_surgery'>Waiting</span></td>
-            <td>22/10/2022</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td><span className='status_recoverd'>Date 4</span></td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td><span className='status_recoverd'>Date 4</span></td>
-            <td>Data 6</td>
-          </tr> */}
-          {/* Add more rows here */}
         </tbody>
       </table>
      

@@ -44,7 +44,9 @@ const Patient = () => {
   const [patientData , setpatientData] = useState([]) ;  
   const [singlePatientData , setsinglePatientData] = useState({}) ;
   const [choose , setChosse] = useState(false) ;
-  const [show , setshow] = useState(false) ;
+  const [showReg , setshowReg] = useState(false) ;
+  const [showidoatient , setshowidoatient] = useState(false) ;
+  console.log(showReg)
   const [patientId , setpatientId] = useState(""); 
   const [direct , setdirect]=useState({value:false , id:""})
   // states 
@@ -95,9 +97,12 @@ const Patient = () => {
   },[singlePatientData])
   // as we type we make req
   useEffect(()=>{
-    setshow(true)
-    console.log('asdasdasdasd')
+    if(opRegNo.length === 0){
+      setshowidoatient(false)
+    }
     if(opRegNo.length >= 1 ){
+      setshowReg(true)
+      console.log({length:opRegNo.length })
       axios(`http://3.110.179.238:8000/Patient/Patient-List-View?Registration_nos=${opRegNo}`)
       .then(resp =>{ console.log(resp.data) ; setpatientData(resp.data.results) ; })
       .catch(err => console.log(err)) 
@@ -105,7 +110,11 @@ const Patient = () => {
   },[opRegNo])
   useEffect(()=>{
     setdirect({value:false , id:""})
+    if(patientId.length === 0){
+      
+    }
     if(patientId.length >= 1){
+      setshowidoatient(true)
       axios(`http://3.110.179.238:8000/Patient/Patient-List-View?UUID=${patientId}`)
     .then(resp => {console.log(resp.data.results);setpatientIDS(resp.data.results) ; setdirect({value:true , id:patientId}) })
     .catch(err => {console.log(err)})
@@ -173,11 +182,11 @@ const Patient = () => {
             <div className='grid'>
             <div>
             <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>setpatientId(e.target.value)}/></div>
-            {patientIDS.length > 0 && <ul>
-              {patientIDS.map((item , index) => <li key={index} onClick={()=>setsinglePatientData({...singlePatientData , ...item })}>{item.uuid}</li>)}
-              </ul>}
+            {showidoatient && <>{patientIDS.length > 0 && <ul>
+              {patientIDS.map((item , index) => <li key={index} onClick={()=>{setsinglePatientData({...singlePatientData , ...item });setshowidoatient(false)}}>{item.uuid}</li>)}
+              </ul>}</>}
             <div className='op_reg FORM_ ' onClick={()=>setHide(true)} ><p>OP Reg. No</p><input type="text" onChange={e => setOpRegNo(e.target.value)} />
-            <div className={`items_data_ul`}>{patientData.length > 0 && <>{patientData.map(item => <div onClick={(e) => {setsinglePatientData({...singlePatientData , ...item });setChosse(true);setHide(false)}} >{item.uuid}</div>)}</>}</div> </div>
+            {showReg && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {setsinglePatientData({...singlePatientData , ...item });setChosse(true);setshowReg(false)}} >{item.uuid}</div>)}</></div>}</>} </div>
             <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
             <div><p>Patient  Name</p><input type="text" value={name} onChange={e => setName(e.target.value)}/></div>
             <div className='calendar-wrapper'>
