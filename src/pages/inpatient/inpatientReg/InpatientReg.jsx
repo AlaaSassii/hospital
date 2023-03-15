@@ -150,10 +150,10 @@ const Patient = () => {
 
   },[])
   const createPatient = () =>{
-    if(name &&address  &&age &&sex &&mobileNos &&altMobileNos &&email &&maritalStatus &&profession &&income &&aadhaarNos && doctor && purpose && referral && preparedBy && remarks && status&& category){
+    if(name &&address  &&age &&sex &&mobileNos &&altMobileNos &&email &&maritalStatus &&profession &&income &&aadhaarNos && doctor && purpose && referral && preparedBy && remarks && status&& category && ward && roomNo &&admission ){
       if(anotherId){
         axios.post("http://13.232.134.127:8000/Patient/create-Inpatient" , {Patient:anotherId ,
-        Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
+        Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category , Closed:closed , Admission:admission , Room_no:roomNo , Ward:ward
       })
           .then(resp => {console.log(resp.data);  })
           .catch(err => console.log(err))
@@ -176,7 +176,7 @@ const Patient = () => {
         axios.post('http://13.232.134.127:8000/Patient/create-patient', data)
           .then(response => {console.log(response.data); id=response.data.id ; 
             axios.post("http://13.232.134.127:8000/Patient/create-Inpatient" , {Patient:response.data.id  ,
-            Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
+            Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category , Closed:closed , Admission:admission , Room_no:roomNo , Ward:ward
           }).then(resp => { console.log(resp.data ); })
             .catch(err => {console.log(err);console.log({Patient:id ,
               Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
