@@ -18,14 +18,14 @@ const Menu = () => {
   return (
     <div className='menu__container'>
             <ul>
-            <li><Link to="/"><img src={image7}/><p>IN Patient Registration</p></Link></li>
-            <li><Link to="/"><img src={image1}/><p>In-Patient Billing</p></Link></li>
-            <li><Link to="/"><img src={image3}/><p>In Paitent Master</p></Link></li>
-            <li><Link to="/"><img src={image2}/><p>Inpatient Advance</p></Link></li>
+            <li><Link to="/InPatientMenu/InpatientReg"><img src={image7}/><p>IN Patient Registration</p></Link></li>
+            <li><Link to="/InPatientMenu/InpatientBilling"><img src={image1}/><p>In-Patient Billing</p></Link></li>
+            <li><Link to="/InPatientMenu/InpatientMaster"><img src={image3}/><p>In Paitent Master</p></Link></li>
+            <li><Link to="/InPatientMenu/AdvReg"><img src={image2}/><p>Inpatient Advance</p></Link></li>
             <li><Link to="/"><img src={image4}/><p>IP List</p></Link></li>
             <li><Link to="/"><img src={image5}/><p>IP Status</p></Link></li>
-            <li><Link to="/"><img src={image8}/><p>IP Bill Reports</p></Link></li>
-            <li><Link to="/"><img src={image6}/><p>IP Bill Summary</p></Link></li>
+            <li><Link to="/InPatientMenu/InpatientBillReps"><img src={image8}/><p>IP Bill Reports</p></Link></li>
+            <li><Link to="/InPatientMenu/InpatientBillSum"><img src={image6}/><p>IP Bill Summary</p></Link></li>
             </ul>
 
     </div>

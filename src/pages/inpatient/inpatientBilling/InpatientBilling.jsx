@@ -5,113 +5,120 @@ import format from 'date-fns/format'
 import './index.scss'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { CurrentPageContext } from '../../../contexts/CurrentPage'
-const InpatientBilling = () => {
+import { MenuPageContext } from '../../../contexts/MenuPage'
+import axios from 'axios'
+import Items from './components/Items'
+import { formatDateTime } from '../../../assets/functions'
+const OutPatientBilling = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const {setMenuPage} = useContext(MenuPageContext) 
+  const [bill , setbill] = useState({}) ; 
+  const [loading ,setloading] = useState(false) ;
+  const [billData , setbillData] = useState({}) ; 
+  const [calendarTime1, setcalendarTime1] = useState(''); 
+  const [calendarTime2, setcalendarTime2] = useState(''); 
+  const [showCalender1 , setShowCalender1] = useState(false) ; 
+  const [showCalender2 , setShowCalender2] = useState(false) ; 
+  const [number , setnumber] = useState('')
+  const [ITEMS , SETITEMS] = useState([]) ;
+  const [show , setShow] = useState(false) ; 
+  const [patientData , setpatientData] = useState([]) ;  
+
   useEffect(()=>{
-    setCurrentPage("In-Patient Billing ")
+    setloading(true) ; 
+    axios("http://13.232.134.127:8000/Patient/InPatient-Items-List")
+    .then(resp =>{ SETITEMS(resp.data.results);setloading(false) ; })
+    .catch(err => console.log(err))
   },[])
-            const [calendarTime1, setcalendarTime1] = useState(''); 
-            const [calendarTime2, setcalendarTime2] = useState(''); 
-            const [showCalender1 , setShowCalender1] = useState(false) ; 
-            const [showCalender2 , setShowCalender2] = useState(false) ; 
+  useEffect(()=>{
+    setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
+  },[])
+
+  useEffect(()=>{
+    setCurrentPage("OutPatientBilling") ; 
+    setMenuPage(false) ; 
+  },[])      
+
             useEffect(()=>{
-              setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; 
-              setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
-          
-            },[])
-            console.log(calendarTime1 , calendarTime2)
+                if(number){
+                  axios.post('http://13.232.134.127:8000/Patient/create-Inpatient-bill', {
+                    "OutPatient": Number(number),
+                    "Paid": false,
+                    "Created_by": "someone",
+                    "Discount":10})
+                  .then(function (response) {
+                    console.log(response.data);
+                    setbillData(response.data)
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                  
+                }
+            },[number])
+
+
+            useEffect(()=>{
+              if(number.length === 0){
+                setShow(false)
+              }
+              if(number.length >= 1 ){
+                setShow(true)
+                axios(`http://13.232.134.127:8000/Patient/Inpatient-List-View?Registration_Nos=${number}`)
+                .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
+                .catch(err => console.log(err)) 
+              }
+            },[number])
+  if(loading) return <h2>Loading...</h2>
   return (
-    <div className='InpatientBilling'>
-            <h5 className='back'>{"<Back"}</h5>
+    <div className='OutPatientBilling'>
+            <h5 id='back'>{"<Back"}</h5>
             <h3>New Bill</h3>
             <div className="form1">
             <div>
-            <div><p>Bill No</p><input type="text" /></div>
-            <div><p>Ip number</p><input type="text" /></div>
-            <div><p>Patient  Name</p><input type="text" /></div>
+            <div><p>Bill No</p><input type="text"  value={billData?.bill?.[0]?.id} /></div>
+            <div><p>outpatient number</p><input type="text"  value={number} onChange={e => setnumber(e.target.value)} /></div>
+            <div>
+            {show && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {setShow(false);setbillData({...item})}} >{item.Registration_Nos}</div>)}</></div>}</>} 
+
+            </div>
+            <div><p>Patient  Name</p><input type="text"  value={billData?.patient?.[0]?.Name}/></div>
             </div>
 
             <div>
             <div className='calendar-wrapper'>
-              <p>Date of birth</p>
+              <p>Date</p>
               <div className="date">
                 <button className="btn-date" onClick={()=>setShowCalender1(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={calendarTime1}   />
+                <input type="text" readOnly value={formatDateTime(billData?.Created).split(" ")[0]}    />
               {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
             </div>
             </div>
-            <div className='calendar-wrapper'>
-              <p>Date and Time </p>
-               <div className="date">
-                <button className='def-button' onClick={()=>setShowCalender2(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={calendarTime2}   />
-              {showCalender2 && <Calendar className='calenderElement' onChange={item => { setcalendarTime2(format(item , 'MM/dd/yyyy'))}} />}
+            <div><p>UHID</p><input type="text"  value={billData?.Created_by}/></div>
+          
             </div>
             </div>
-            </div>
-            </div>
-            <div className="form2">
-            <div><p>Item Code</p><input type="text" /></div>
-            <div><p>Item </p><input type="text" /></div>
-            <div><p>Amount</p><input type="text" /></div>
-            </div>
-            <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>{"< Filter >"}</th>
-            <th>Cash</th>
-            <th>Card</th>
-            <th>Credit</th>
-            <th>Other</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          {/* Add more rows here */}
-        </tbody>
-      </table>
-    </div>
-            <div className="form3">
-            <div>
-            <div><p>Total Items</p><input type="text" /></div>
-            <div><p>SubToal</p><input type="text" /></div>
-            <div><p>Discount%</p><input type="text" /></div>
-            <div><p>Net Total</p><input type="text" /></div>
-            </div>
-            
-            <div>
-            <div><div><p>Pay Mode</p><input type="text" /></div>
-            <div><p>Advance</p><input type="text" /></div>
-            <div><p>Prepared by</p><input type="text" /></div></div>
-            <div>
-            <button>Save</button>
-            <button>Draft</button>
-            <button>Load Draft</button>
-            <button>Remove</button>
-            <button>Apply</button>
-            <button>Clear</button>
-            </div>
-            </div>
-            </div>
+            <Items ITEMS={ITEMS} bill_id={billData.bill?.[0]?.id} Discount={billData.Discount}/>
+          
 </div>
   )
 }
 
-export default InpatientBilling
+export default OutPatientBilling
+
+//             useEffect(()=>{
+//               axios.post('http://13.232.134.127:8000/Patient/create-Outpatient-bill', {
+//                 "OutPatient": 19,
+//                 "Paid": false,
+//                 "Created_by": "someone",
+//                 "Discount":10
+// })
+//               .then(function (response) {
+//                 console.log(response.data);
+//                 setbillData(response.data)
+//               })
+//               .catch(function (error) {
+//                 console.log(error);
+//               });
+              
+//             },[])

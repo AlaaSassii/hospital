@@ -4,8 +4,13 @@ import format from 'date-fns/format'
 import { AiOutlineCalendar } from 'react-icons/ai';
 import './index.scss'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import axios from 'axios';
 const AdvReg = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
+  const [number , setnumber] = useState('') ;
+  const [patientData , setpatientData] = useState([]) ;  
+  const [show , setShow] = useState(false) ; 
+
   useEffect(()=>{
     setCurrentPage("In Patient Advance Register ")
   },[])
@@ -15,6 +20,17 @@ const AdvReg = () => {
   useEffect(()=>{
     setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; 
   },[])
+  useEffect(()=>{
+    if(number.length === 0){
+      setShow(false)
+    }
+    if(number.length >= 1 ){
+      setShow(true)
+      axios(`http://13.232.134.127:8000/Patient/Inpatient-List-View?Registration_Nos=${number}`)
+      .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
+      .catch(err => console.log(err)) 
+    }
+  },[number])
   return (
     <div className='inpatient_adv_reg'>
             <div className='back'>{"<Back"}</div>
@@ -23,7 +39,10 @@ const AdvReg = () => {
               <div>
               <div>
               <div className='signle_form'><p>Bill No</p> <input type="text" /></div>
-              <div className='signle_form'><p>IP number</p> <input type="text" /></div>
+              <div className='signle_form'><p>IP number</p> <input type="text"  value={number} onChange={e => setnumber(e.target.value)}/></div>
+            {show && <>{patientData.length > 0 && <ul className={`items_data_ul`}><li>{patientData.map(item => <div  >{item.Registration_Nos}</div>)}</li></ul>}</>} 
+
+              
               <div className='signle_form'><p>Payment mode</p> <input type="text" /></div>
               </div>
               <div>
@@ -44,12 +63,14 @@ const AdvReg = () => {
       <table>
         <thead>
           <tr>
-            <th>{"< Filter >"}</th>
-            <th>Cash</th>
-            <th>Card</th>
-            <th>Credit</th>
-            <th>Other</th>
-            <th>Total</th>
+            <th>UHID</th>
+            <th>Patient Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Purpose</th>
+            <th>Admision date and time</th>
+            <th>Ward and floor number</th>
+            <th>Admission type</th>
           </tr>
         </thead>
         <tbody className="table-body">

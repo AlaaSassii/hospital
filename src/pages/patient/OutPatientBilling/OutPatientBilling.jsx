@@ -26,7 +26,7 @@ const OutPatientBilling = () => {
 
   useEffect(()=>{
     setloading(true) ; 
-    axios("http://3.110.179.238:8000/Patient/OutPatient-Items-List")
+    axios("http://13.232.134.127:8000/Patient/OutPatient-Items-List")
     .then(resp =>{ SETITEMS(resp.data.results);setloading(false) ; })
     .catch(err => console.log(err))
   },[])
@@ -41,7 +41,7 @@ const OutPatientBilling = () => {
 
             useEffect(()=>{
                 if(number){
-                  axios.post('http://3.110.179.238:8000/Patient/create-Outpatient-bill', {
+                  axios.post('http://13.232.134.127:8000/Patient/create-Outpatient-bill', {
                     "OutPatient": Number(number),
                     "Paid": false,
                     "Created_by": "someone",
@@ -64,7 +64,7 @@ const OutPatientBilling = () => {
               }
               if(number.length >= 1 ){
                 setShow(true)
-                axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?Registration_Nos=${number}`)
+                axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?Registration_Nos=${number}`)
                 .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
                 .catch(err => console.log(err)) 
               }
@@ -107,7 +107,7 @@ const OutPatientBilling = () => {
 export default OutPatientBilling
 
 //             useEffect(()=>{
-//               axios.post('http://3.110.179.238:8000/Patient/create-Outpatient-bill', {
+//               axios.post('http://13.232.134.127:8000/Patient/create-Outpatient-bill', {
 //                 "OutPatient": 19,
 //                 "Paid": false,
 //                 "Created_by": "someone",

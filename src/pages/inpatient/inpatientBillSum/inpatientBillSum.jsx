@@ -1,20 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BsQuestionCircle } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
 import {BiFilterAlt} from 'react-icons/bi' ;
 
-import './index.scss'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
+import { MenuPageContext } from '../../../contexts/MenuPage';
+import axios from 'axios';
+import TableRows from '../../patient/OutPatientSummary/components/TableRows';
 
-const InpatientBilSum = () => {
+const InpatientBillSum = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
+const {MenuPage , setMenuPage} = useContext(MenuPageContext);
+  const [FetchingLoading , setFetchingLoading] = useState(true) ; 
+  const [data , setdata ] = useState("") ;
+
   useEffect(()=>{
-    setCurrentPage("In Patients Bill Reports")
+    setFetchingLoading(true) ; 
+    axios("http://13.232.134.127:8000/Patient/Inpatient-List-View")
+    .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
+    .catch(err => console.log(err)) ;
   },[])
+
+  useEffect(()=>{
+    setCurrentPage("Out Patients Bill Reports ") ; 
+    setMenuPage(false)
+  },[])
+  if(FetchingLoading) return <h1>Loading...</h1>
   return (
-            <div>
-            <h5 className='back'>{">back"}</h5>
+            <div className='OutPatientSummary'>
+            <div id='back'>{">back"}</div>
             <div className='save '>
             <div className='btn-icons'>
             <button><div><AiOutlinePlus style={{fontSize:25}}/></div></button>
@@ -29,69 +44,14 @@ const InpatientBilSum = () => {
         <thead>
           <tr>
             <th>{"< Filter >"}</th>
-            <th>Cash</th>
-            <th>Card</th>
-            <th>Credit</th>
+            <th>Cash / Card</th>
             <th>Other</th>
             <th>Total</th>
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>  <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 4</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 5</td>
-            <td>Data 6</td>
-          </tr>
-          {/* Add more rows here */}
+        {data.results.map((element , index) => <TableRows index={index} key={index} {...element}/>)}
+   
         </tbody>
       </table>
     </div>
@@ -103,4 +63,4 @@ const InpatientBilSum = () => {
   )
 }
 
-export default InpatientBilSum
+export default InpatientBillSum

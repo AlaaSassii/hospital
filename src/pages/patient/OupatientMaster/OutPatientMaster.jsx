@@ -30,7 +30,7 @@ const OutPatientMaster = () => {
 
   const handleSubmit = () => {
     const {Name , Amount , Description ,Category } = data1
-    axios.post('http://3.110.179.238:8000/Patient/create-outpatient-items', {
+    axios.post('http://13.232.134.127:8000/Patient/create-outpatient-items', {
       Name,
       Amount , 
       Description, 
@@ -57,7 +57,7 @@ const OutPatientMaster = () => {
 
   useEffect(()=>{
     if(itemCode || description || amount || category){
-      axios(`http://3.110.179.238:8000/Patient/OutPatient-Items-List?Category=${category}&uuid=${itemCode}`)
+      axios(`http://13.232.134.127:8000/Patient/OutPatient-Items-List?Category=${category}&uuid=${itemCode}`)
     .then(resp => {console.log(resp.data.results);setdata(resp.data.results);
     })
     .catch(err => console.log(err))

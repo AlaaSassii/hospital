@@ -26,7 +26,7 @@ const Items = ({ITEMS , bill_id , Discount}) => {
       "bill_id":bill_id,
                 "bill_items": itemTable.map(item => {return{"item_id":item.id}})
     }
-    axios.post("http://13.232.134.127:8000/Patient/create-Outpatient-billitems" , data)
+    axios.post("http://13.232.134.127:8000/Patient/create-Inpatient-billitems" , data)
       .then(resp => {console.log(resp.data);setItemTable([]);setFinalresp(resp.data)})
       .catch(err => console.log(err))
       

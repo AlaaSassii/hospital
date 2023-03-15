@@ -16,7 +16,7 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
 
   useEffect(()=>{
     setFetchingLoading(true) ; 
-    axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+    axios("http://13.232.134.127:8000/Patient/OutPatient-List-View")
     .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
     .catch(err => console.log(err)) ;
   },[])

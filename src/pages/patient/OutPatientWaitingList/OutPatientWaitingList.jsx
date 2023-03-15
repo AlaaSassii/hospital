@@ -36,7 +36,7 @@ const OutPatientWaitingList = () => {
             },[])
             useEffect(()=>{
               if(name || consultant || status ||dateTime ){
-                axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?patient_name=${name}&doctor=${consultant}&Status=${status}`)
+                axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?patient_name=${name}&doctor=${consultant}&Status=${status}`)
               .then(resp => {console.log(resp.data.results);setdata(resp.data.results)})
               .catch(err => console.log(err))
               }

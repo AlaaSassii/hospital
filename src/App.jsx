@@ -12,13 +12,21 @@ import OutPatientSummary from './pages/patient/OutPatientSummary/OutPatientSumma
 import OutPatientWaitingList from './pages/patient/OutPatientWaitingList/OutPatientWaitingList';
 import OutPatientReg from './pages/patient/patient1/Patient'
 
+import InpatientReg from './pages/inpatient/inpatientReg/InpatientReg'
+import InpatientBillSum from './pages/inpatient/inpatientBillSum/inpatientBillSum' ;
+import InpatientMaster from './pages/inpatient/inpatientMaster/InpatientMaster' ; 
+import InpatientBilling from './pages/inpatient/inpatientBilling/InpatientBilling'
+import AdvReg from './pages/inpatient/inpatientAdvReg/AdvReg'
+import InpatientBillReps from './pages/inpatient/inpatienBillReports/InpatientBillReps'
+import InPatientMenu from './pages/inpatient/menu/Menu'
 function App() {
   return (
     <CurrentPageContextProvider>
       
       <PageWrapper>
         <Routes>
-        <Route path='/' element={<Menu/>}/>
+        <Route path='/' element={<LINKS/>} />
+        <Route path='/OutPatientMenu' element={<Menu/>}/>
         <Route path='/OutPatientMenu/OutPatientMaster' element={<OutPatientMaster/>}/>
         <Route path='/OutPatientMenu/OutPatientBilling' element={<OutPatientBilling/>}/>
         <Route path='/OutPatientMenu/OutPatientReps' element={<OutPatientReps/>}/>
@@ -28,7 +36,16 @@ function App() {
         <Route path='/OutPatientMenu/OutPatientsBillReports' element={<OutPatientsBillReports/>}/>
         <Route path='/OutPatientMenu/OutPatientReg' element={<OutPatientReg/>}/>
 
+        <Route path='/InPatientMenu' element={<InPatientMenu/>}/>
+        <Route path='/InPatientMenu/InpatientReg' element={<InpatientReg/>}/>
+        <Route path='/InPatientMenu/InpatientBillSum' element={<InpatientBillSum/>}/>
+        <Route path='/InPatientMenu/InpatientMaster' element={<InpatientMaster/>}/>
+        <Route path='/InPatientMenu/InpatientBilling' element={<InpatientBilling/>}/>
+        <Route path='/InPatientMenu/InpatientBillReps' element={<InpatientBillReps/>}/>
+        <Route path='/InPatientMenu/AdvReg' element={<AdvReg/>}/>
+
         </Routes>
+        {/* <InpatientBilling/> */}
       </PageWrapper>
    
     </CurrentPageContextProvider>
@@ -47,3 +64,11 @@ export default App
 //                         setMenuPage(false) ; 
 //                         setCurrentPage("")
 //             },[])
+const LINKS = () => {
+  console.log('asdasdasdasdasdsd')
+  return (<>
+  <Link to="/OutPatientMenu">OutPatientMenu</Link>
+  <br />
+  <Link to="/InPatientMenu">InPatientMenu</Link>
+  </>)
+}

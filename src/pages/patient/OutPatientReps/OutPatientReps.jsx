@@ -19,7 +19,7 @@ const OutPatientReps = () => {
             const [patientNumber, setPatientNumber] = useState('');
             useEffect(()=>{
               if(name || opNo || patientNumber){
-                axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?Registration_Nos=${opNo}&patient_name=${name}&patient_id=${patientNumber}`)
+                axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?Registration_Nos=${opNo}&patient_name=${name}&patient_id=${patientNumber}`)
               .then(resp => {console.log(resp.data.results);setdata(resp.data.results)})
               .catch(err => console.log(err))
               }
@@ -90,7 +90,7 @@ export default OutPatientReps
 
                 // useEffect(()=>{
                 //   setFetchingLoading(true) ; 
-                //   axios("http://3.110.179.238:8000/Patient/OutPatient-List-View")
+                //   axios("http://13.232.134.127:8000/Patient/OutPatient-List-View")
                 //   .then(resp =>{ console.log(resp.data.results[0]); setdata(resp.data.results);setFetchingLoading(false);setsamedata(resp.data.results); repeatdata=[...resp.data.results]})
                 //   .catch(err => console.log(err)) ;
                 // },[])

@@ -8,7 +8,7 @@ import axios from 'axios';
 const Test = () => {
             const [state, setState] = useState(''); 
         useEffect(()=>{
-            axios("http://3.110.179.238:8000/admin/patient/outpaitient/")
+            axios("http://13.232.134.127:8000/admin/patient/outpaitient/")
             .then(resp => console.log(resp))
             .catch(err => console.log(err))
         },[])

@@ -90,7 +90,7 @@ const Patient = () => {
    
       // setChosse(false) ; 
       // console.log(singlePatientData) ;
-      // axios(`http://3.110.179.238:8000/Patient/get-Outpatient/${singlePatientData.Registration_Nos}`)
+      // axios(`http://13.232.134.127:8000/Patient/get-Outpatient/${singlePatientData.Registration_Nos}`)
       //                   .then(resp =>{console.log({...resp.data.data , ...singlePatientData});setsinglePatientData(prevData => {return({...resp.data.data , ...prevData})})})
       //                   .catch(err => console.log(err))
     }
@@ -103,7 +103,7 @@ const Patient = () => {
     if(opRegNo.length >= 1 ){
       setshowReg(true)
       console.log({length:opRegNo.length })
-      axios(`http://3.110.179.238:8000/Patient/OutPatient-List-View?Registration_Nos=${opRegNo}`)
+      axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?Registration_Nos=${opRegNo}`)
       .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
       .catch(err => console.log(err)) 
     }
@@ -115,7 +115,7 @@ const Patient = () => {
     }
     if(patientId.length >= 1){
       setshowidoatient(true)
-      axios(`http://3.110.179.238:8000/Patient/Patient-List-View?UUID=${patientId}`)
+      axios(`http://13.232.134.127:8000/Patient/Patient-List-View?UUID=${patientId}`)
     .then(resp => {console.log(resp.data.results);setpatientIDS(resp.data.results) ; setdirect({value:true , id:patientId}) })
     .catch(err => {console.log(err)})
     }
@@ -126,7 +126,7 @@ const Patient = () => {
   const createPatient = () =>{
     if(name &&address  &&age &&sex &&mobileNos &&altMobileNos &&email &&maritalStatus &&profession &&income &&aadhaarNos && doctor && purpose && referral && preparedBy && remarks && status&& category){
       if(anotherId){
-        axios.post("http://3.110.179.238:8000/Patient/create-Outpatient" , {Patient:anotherId ,
+        axios.post("http://13.232.134.127:8000/Patient/create-Outpatient" , {Patient:anotherId ,
         Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
       })
           .then(resp => {console.log(resp.data);  })
@@ -147,9 +147,9 @@ const Patient = () => {
           Aadhaar_Nos:aadhaarNos.toString()
         };
         let id = "" ; 
-        axios.post('http://3.110.179.238:8000/Patient/create-patient', data)
+        axios.post('http://13.232.134.127:8000/Patient/create-patient', data)
           .then(response => {console.log(response.data); id=response.data.id ; 
-            axios.post("http://3.110.179.238:8000/Patient/create-Outpatient" , {Patient:response.data.id  ,
+            axios.post("http://13.232.134.127:8000/Patient/create-Outpatient" , {Patient:response.data.id  ,
             Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
           }).then(resp => { console.log(resp.data ); })
             .catch(err => {console.log(err);console.log({Patient:id ,
