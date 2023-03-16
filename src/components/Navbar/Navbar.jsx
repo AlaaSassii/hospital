@@ -31,8 +31,8 @@ const Navbar = () => {
             <img src={logo}   />
             <ul>
             <li ><Link to="/" className={activeIndex === 0 ? 'active' : ''}  onClick={() => handleLinkClick(0)}><span></span><span>Dashboard</span></Link></li>
-            <li><Link to="/" className={activeIndex === 1 ? 'active' : ''}  onClick={() => handleLinkClick(1)}><span></span><span>Out Patient</span></Link></li>
-            <li><Link to="/" className={activeIndex === 2 ? 'active' : ''}  onClick={() => handleLinkClick(2)}><span></span><span>In Patient</span></Link></li>
+            <li><Link to="/OutPatientMenu" className={activeIndex === 1 ? 'active' : ''}  onClick={() => handleLinkClick(1)}><span></span><span>Out Patient</span></Link></li>
+            <li><Link to="/InPatientMenu" className={activeIndex === 2 ? 'active' : ''}  onClick={() => handleLinkClick(2)}><span></span><span>In Patient</span></Link></li>
             <li><Link to="/" className={activeIndex === 3 ? 'active' : ''} onClick={() => handleLinkClick(3)}><span></span><span>Pharmacy</span></Link></li>
             <li><Link to="/" className={activeIndex === 4 ? 'active' : ''} onClick={() => handleLinkClick(4)}><span></span><span>Lab</span></Link></li>
             <li><Link to="/" className={activeIndex === 5 ? 'active' : ''} onClick={() => handleLinkClick(5)}><span></span><span>Accounts</span></Link></li>

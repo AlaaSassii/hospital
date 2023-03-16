@@ -74,18 +74,47 @@ const Patient = () => {
   useEffect(()=>{
     if(singlePatientData){
       if(Object.keys(singlePatientData).length > 0 ){
-        setAadhaarNos(singlePatientData.Aadhaar_Nos);
-        setAddress(singlePatientData.Address) ; 
-        setAge(singlePatientData.Age) ; 
-        setMobileNos(singlePatientData.Alt_Mobile_nos) ;
-        setEmail(singlePatientData.Email) ; 
-        setIncome(singlePatientData.Income) ; 
-        setMaritalStatus(singlePatientData.Marital_Status) ; 
-        setMobileNos(singlePatientData.Mobile_nos);
-        setName(singlePatientData.Name);
-        setProfession(singlePatientData.Profession) ; 
-        setSex(singlePatientData.Sex); 
-        setAnotherId(singlePatientData.id)
+        if(patientId){
+          console.log("1111111111111111111111111111111111111111111111111111111111")
+          setAadhaarNos(singlePatientData.Aadhaar_Nos);
+          setAddress(singlePatientData.Address) ; 
+          setAge(singlePatientData.Age) ; 
+          setMobileNos(singlePatientData.Alt_Mobile_nos) ;
+          setEmail(singlePatientData.Email) ; 
+          setIncome(singlePatientData.Income) ; 
+          setMaritalStatus(singlePatientData.Marital_Status) ; 
+          setMobileNos(singlePatientData.Mobile_nos);
+          setName(singlePatientData.Name);
+          setProfession(singlePatientData.Profession) ; 
+          setSex(singlePatientData.Sex); 
+          setAnotherId(singlePatientData.id)
+          setAltMobileNos(singlePatientData?.patient?.[0]?.Alt_Mobile_nos)
+          setDoctor(1);
+          setStatus(singlePatientData.Status) ;
+          setpatientId(singlePatientData.uuid) ;
+
+
+      }else{
+        console.log({singlePatientData})
+          setAadhaarNos(singlePatientData.Aadhaar_Nos);
+          setAddress(singlePatientData.Address) ; 
+          setAge(singlePatientData.Age) ; 
+          setMobileNos(singlePatientData.Alt_Mobile_nos) ;
+          setEmail(singlePatientData.Email) ; 
+          setIncome(singlePatientData.Income) ; 
+          setMaritalStatus(singlePatientData.Marital_Status) ; 
+          setMobileNos(singlePatientData.Mobile_nos);
+          setName(singlePatientData.Name);
+          setProfession(singlePatientData.Profession) ; 
+          setSex(singlePatientData.Sex); 
+          setAnotherId(singlePatientData.id)
+          setAltMobileNos(singlePatientData?.patient?.[0]?.Alt_Mobile_nos)
+          setDoctor(1);
+          setOpRegNo(singlePatientData.Registration_Nos ) ;
+          setPreparedBy(singlePatientData.Prepared_by) ;
+          setStatus(singlePatientData.Status) ;
+
+        }
     }
    
       // setChosse(false) ; 
@@ -172,7 +201,7 @@ const Patient = () => {
     const { patient} = element ; 
     const {Aadhaar_Nos , Address , Age ,Alt_Mobile_nos , Created , Email , Income ,Marital_Status , Mobile_nos , Name , Profession , Sex , id , uuid , } =patient[0] ; 
     const data  = {Aadhaar_Nos , Address , Age ,Alt_Mobile_nos , Created , Email , Income ,Marital_Status , Mobile_nos , Name , Profession , Sex , id , uuid } ;
-    setsinglePatientData({...singlePatientData , ...data }) }
+    setsinglePatientData({...singlePatientData , ...data , ...element }) }
   return (
     <div >
             <div id='back'>{"<Back"}</div>
@@ -230,8 +259,8 @@ const Patient = () => {
             <div><p>Aadhar number</p><input type="text"  value={ aadhaarNos  }  onChange={e => setAadhaarNos(e.target.value)}/></div>
             <div><p>Doctor</p><input type="number"  onChange={e => setDoctor(e.target.value)}   value={doctor}  /></div>
             <div><p>Remarks/ Diagnosis</p><input      value={remarks}  type="text" onChange={e => setRemarks(e.target.value)} /></div>
-            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select></div>
-            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } defaultValue={purpose} ><option value="">Purpose</option><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
+            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } value={status} ><option value="">Status</option><option value="Waiting_Patient">waiting patient</option><option value="Completed">Completed</option></select></div>
+            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } value={purpose} ><option value="">Purpose</option><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
 
             <div><p>Referral</p><input type="text" onChange={e => setReferral(e.target.value)} value={referral} /></div>
 

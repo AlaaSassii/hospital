@@ -5,12 +5,13 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import './index.scss'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import axios from 'axios';
+import { formatDateTime } from '../../../assets/functions';
 const AdvReg = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
   const [number , setnumber] = useState('') ;
   const [patientData , setpatientData] = useState([]) ;  
   const [show , setShow] = useState(false) ; 
-
+  const [data ,setsingledata] = useState({})
   useEffect(()=>{
     setCurrentPage("In Patient Advance Register ")
   },[])
@@ -40,7 +41,7 @@ const AdvReg = () => {
               <div>
               <div className='signle_form'><p>Bill No</p> <input type="text" /></div>
               <div className='signle_form'><p>IP number</p> <input type="text"  value={number} onChange={e => setnumber(e.target.value)}/></div>
-            {show && <>{patientData.length > 0 && <ul className={`items_data_ul`}><li>{patientData.map(item => <div  >{item.Registration_Nos}</div>)}</li></ul>}</>} 
+            {show && <>{patientData.length > 0 && <ul className={`items_data_ul`}><li>{patientData.map(item => <div onClick={()=>setsingledata(item)} >{item.Registration_Nos}</div>)}</li></ul>}</>} 
 
               
               <div className='signle_form'><p>Payment mode</p> <input type="text" /></div>
@@ -74,23 +75,15 @@ const AdvReg = () => {
           </tr>
         </thead>
         <tbody className="table-body">
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-            <td>Data 3</td>
-          </tr>
-
+        <tr>
+            <td>{}</td>
+            <td>{data?.patient?.[0]?.Name}</td>
+            <td>{data?.patient?.[0]?.Sex}</td>
+            <td>{data?.patient?.[0]?.Age}</td>
+            <td>{data?.Purpose}</td>
+            <td>{formatDateTime(data?.Created)}</td>
+            <td>{data?.Ward}</td>
+        </tr>
         </tbody>
       </table>
     </div>

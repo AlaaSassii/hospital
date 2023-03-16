@@ -39,7 +39,7 @@ const Patient = () => {
     setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; 
     setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
   },[])
-  const [opRegNo , setOpRegNo] = useState("") ; 
+  const [ipRegNo , setIpRegNo] = useState("") ; 
   const [patientData , setpatientData] = useState([]) ;  
   const [singlePatientData , setsinglePatientData] = useState({}) ;
   const [choose , setChosse] = useState(false) ;
@@ -80,20 +80,24 @@ const Patient = () => {
         if(Object.keys(singlePatientData).length > 0 ){
           if(patientId){
             console.log("1111111111111111111111111111111111111111111111111111111111")
-          setAadhaarNos(singlePatientData.Aadhaar_Nos);
-          setAddress(singlePatientData.Address) ; 
-          setAge(singlePatientData.Age) ; 
-          setMobileNos(singlePatientData.Alt_Mobile_nos) ;
-          setEmail(singlePatientData.Email) ; 
-          setIncome(singlePatientData.Income) ; 
-          setMaritalStatus(singlePatientData.Marital_Status) ; 
-          setMobileNos(singlePatientData.Mobile_nos);
-          setName(singlePatientData.Name);
-          setProfession(singlePatientData.Profession) ; 
-          setSex(singlePatientData.Sex); 
-          setAnotherId(singlePatientData.id)
+            setAadhaarNos(singlePatientData.Aadhaar_Nos);
+            setAddress(singlePatientData.Address) ; 
+            setAge(singlePatientData.Age) ; 
+            setMobileNos(singlePatientData.Alt_Mobile_nos) ;
+            setEmail(singlePatientData.Email) ; 
+            setIncome(singlePatientData.Income) ; 
+            setMaritalStatus(singlePatientData.Marital_Status) ; 
+            setMobileNos(singlePatientData.Mobile_nos);
+            setName(singlePatientData.Name);
+            setProfession(singlePatientData.Profession) ; 
+            setSex(singlePatientData.Sex); 
+            setAnotherId(singlePatientData.id)
+            setAltMobileNos(singlePatientData?.patient?.[0]?.Alt_Mobile_nos)
+            setDoctor(1);
+          setStatus(singlePatientData.Status) ;
+
         }else{
-          console.log("3333333333333333333333333333333333333333333333333333333")
+          console.log("3333333333333333333333333333333333333333333333333333333", singlePatientData.ward)
 
           setAadhaarNos(singlePatientData.Aadhaar_Nos);
           setAddress(singlePatientData.Address) ; 
@@ -107,8 +111,14 @@ const Patient = () => {
           setProfession(singlePatientData.Profession) ; 
           setSex(singlePatientData.Sex); 
           setAnotherId(singlePatientData.id)
-          setWard(singlePatientData.ward) ;
+          setWard(singlePatientData.Ward) ;
           setRoomNo(singlePatientData.Room_no) ; 
+          setPreparedBy(singlePatientData.Prepared_by) ;
+          setAltMobileNos(singlePatientData.patient[0].Alt_Mobile_nos)
+          setIpRegNo(singlePatientData.Registration_Nos) ; 
+          setDoctor(1);
+          setStatus(singlePatientData.Status) ;
+
         }
       }
       
@@ -122,21 +132,23 @@ const Patient = () => {
     }
   },[singlePatientData])
   // as we type we make req
+  console.log({ipRegNo})
+
   useEffect(()=>{
-    if(opRegNo.length === 0){
+    if(ipRegNo.length === 0){
       setshowidoatient(false)
     }
-    if(opRegNo.length >= 1 ){
+    if(ipRegNo.length >= 1 ){
       setshowReg(true)
-      console.log({length:opRegNo.length })
-      axios(`http://13.232.134.127:8000/Patient/Inpatient-List-View?Registration_Nos=${opRegNo}`)
+      console.log({length:ipRegNo.length })
+      axios(`http://13.232.134.127:8000/Patient/Inpatient-List-View?Registration_Nos=${ipRegNo}`)
       .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
       .catch(err => console.log(err)) 
     }
-  },[opRegNo])
+  },[ipRegNo])
   useEffect(()=>{
     setdirect({value:false , id:""})
-    if(patientId.length === 0){
+    if(patientId?.length === 0){
       
     }
     if(patientId.length >= 1){
@@ -211,15 +223,15 @@ const Patient = () => {
             </div>
             <div className='grid'>
             <div>
-            <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>{ !(opRegNo.length > 0) && setpatientId(e.target.value)}}/></div>
+            <div><p>id pateint</p><input type="text" value={patientId}  onChange={e =>{ !(ipRegNo.length > 0) && setpatientId(e.target.value)}}/></div>
             {showidoatient && <>{patientIDS.length > 0 && <ul>
               {patientIDS.map((item , index) => <li key={index} onClick={()=>{  setsinglePatientData({...singlePatientData , ...item });setshowidoatient(false)}}>{item.uuid}</li>)}
               </ul>}</>}
             <div className='op_reg FORM_ ' onClick={()=>setHide(true)} >
             <p>OP Reg. No</p>
-            <input type="text" value={opRegNo} onChange={e => { !(patientId.length > 0) && setOpRegNo(e.target.value)}} />
+            <input type="text" value={ipRegNo} onChange={e => { !(patientId.length > 0) && setIpRegNo(e.target.value)}} />
             {showReg && <>{patientData.length > 0 && <div className={`items_data_ul`}><>{patientData.map(item => <div onClick={(e) => {takeFromReg(item);setshowReg(false)}} >{item.Registration_Nos}</div>)}</></div>}</>} </div>
-            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } defaultValue={category} ><option value="">Category</option><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
+            <div><p>Category</p><select onChange={e => setCategory(e.target.value) } value={category} ><option value="">Category</option><option value="Review Patient">Review Patient</option> <option value="New Patient">New Patient</option></select></div>
             <div><p>Patient  Name</p><input type="text" value={name} onChange={e => setName(e.target.value)}/></div>
             <div className='calendar-wrapper'>
               <p>Date of birth</p>
@@ -233,7 +245,7 @@ const Patient = () => {
             <div><p>Sex</p><div><button  onClick={e => setSex("Male")} className='def-button' style={{backgroundColor:`${sex === "Male" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex=== "Male" && '#fff'}`}}>Male</button><button onClick={e => setSex("Female")} style={{backgroundColor:`${sex === "Female" ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${sex === "Female" && '#fff'}`}} className='def-button'>Female</button></div></div>
             <div><p>Phone No.</p><input type="text" value={mobileNos}  onChange={e => setMobileNos(e.target.value)}/></div>
             <div><p>Address</p><textarea type="text" value={address} onChange={e => setAddress(e.target.value)} rows={7} cols={30} /></div>
-            <div><p>Profession</p><select  onChange={e => setProfession(e.target.value) } defaultValue={profession} ><option value="Profession">Profession</option><option value="Nurse">Nurse</option><option  value="Doctor">Doctor</option></select></div>
+            <div><p>Profession</p><select  onChange={e => setProfession(e.target.value) } value={profession} ><option value="Profession">Profession</option><option value="Nurse">Nurse</option><option  value="Doctor">Doctor</option></select></div>
 
             <div><p>Income</p><input type="text" onChange={e => setIncome( e.target.value)} value={income} /></div>
             <div><p>Prepared by</p><input type="text" value={preparedBy} onChange={e => setPreparedBy(e.target.value)}  /></div>
@@ -258,13 +270,13 @@ const Patient = () => {
             <div><p>Aadhar number</p><input type="text"  value={ aadhaarNos  }  onChange={e => setAadhaarNos(e.target.value)}/></div>
             <div><p>Doctor</p><input type="number"  onChange={e => setDoctor(e.target.value)}   value={doctor}  /></div>
             <div><p>Remarks/ Diagnosis</p><input      value={remarks}  type="text" onChange={e => setRemarks(e.target.value)} /></div>
-            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } defaultValue={status} ><option value="">Status</option><option value="waiting_patient">waiting patient</option><option value="Completed">Completed</option></select></div>
-            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } defaultValue={purpose} ><option value="">Purpose</option><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
+            <div><p>Status</p><select onChange={e => setStatus(e.target.value) } value={status} ><option value="">Status</option><option value="Waiting_Patient">waiting patient</option><option value="Completed">Completed</option></select></div>
+            <div><p>Purpose</p><select  onChange={e => setPurpose(e.target.value) } value={purpose} ><option value="">Purpose</option><option value="Consulation">Consulation</option><option  value="Operation">Operation</option></select></div>
             <div><p>Referral</p><input type="text" onChange={e => setReferral(e.target.value)} value={referral} /></div>
 
             
             <div><p>admission</p>
-            <select  onChange={e => setAdmission(e.target.value) } defaultValue={admission} ><option value=""></option><option value="ICO-Normal">ICO-Normal</option><option  value="Others">Operation</option></select></div>
+            <select  onChange={e => setAdmission(e.target.value) } value={admission} ><option value=""></option><option value="ICO-Normal">ICO-Normal</option><option  value="Others">Operation</option></select></div>
             <button style={{backgroundColor:`${closed ? '#222831' : 'rgb(214, 214, 214)'}`,color:`${closed && '#fff'}`}} className='def-button' onClick={()=>setClosed(true)}>Closed</button>
             </div>
             </div>

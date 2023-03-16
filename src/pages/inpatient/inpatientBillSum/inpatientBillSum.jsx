@@ -13,20 +13,20 @@ const InpatientBillSum = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
 const {MenuPage , setMenuPage} = useContext(MenuPageContext);
   const [FetchingLoading , setFetchingLoading] = useState(true) ; 
-  const [data , setdata ] = useState("") ;
-
+  const [data , setdata ] = useState([]) ;
+  const [name , setname] = useState("") ; 
+  const [reg  ,setReg] = useState("")
   useEffect(()=>{
-    setFetchingLoading(true) ; 
-    axios("http://13.232.134.127:8000/Patient/Inpatient-List-View")
-    .then(resp =>{ console.log(resp.data); setdata(resp.data);setFetchingLoading(false);})
-    .catch(err => console.log(err)) ;
-  },[])
+    if(name || reg){
+    axios(`http://13.232.134.127:8000/Patient/Inpatient-List-View?patient_name=${name}&Registration_Nos=${reg}`)
+    .then(resp =>{ console.log(resp.data.results); setdata(resp.data.results)})
+    .catch(err => console.log(err)) ;}
+  },[name , reg])
 
   useEffect(()=>{
     setCurrentPage("Out Patients Bill Reports ") ; 
     setMenuPage(false)
   },[])
-  if(FetchingLoading) return <h1>Loading...</h1>
   return (
             <div className='OutPatientSummary'>
             <div id='back'>{">back"}</div>
@@ -39,19 +39,23 @@ const {MenuPage , setMenuPage} = useContext(MenuPageContext);
             </div>
             
             </div>
+            <div><p>name</p><input type="text" value={name} onChange={e=>setname(e.target.value)} /></div>
+            <div><p>reg</p><input type="text" value={reg} onChange={e=>setReg(e.target.value)} /></div>
             <div className="table-container">
       <table>
         <thead>
           <tr>
             <th>{"< Filter >"}</th>
             <th>Cash / Card</th>
+            <th>Credit</th>
             <th>Other</th>
             <th>Total</th>
           </tr>
         </thead>
         <tbody className="table-body">
-        {data.results.map((element , index) => <TableRows index={index} key={index} {...element}/>)}
-   
+            {
+              data.map((element , index) => <tr key={index}><td>{element?.Registration_Nos}</td><td>{element?.bill?.[0]?.Paid_Through}</td><td>{element?.bill?.[0]?.Remaining_Amount}</td><td>{element?.bill?.[0]?.Remaining_Amount}</td><td>{element?.bill?.[0]?.Total_Amount_Paid}</td></tr>)
+            }
         </tbody>
       </table>
     </div>
