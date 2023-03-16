@@ -16,3 +16,22 @@ export function formatDateTime(dateTimeString) {
 export function replaceUnderscores(str) {
             return str.replace(/_/g, ' ');
           }
+
+
+export const requiredCondition = (value , regValue , idValue) =>{
+  if(!regValue && !idValue ){
+    if(value)return false 
+    else return true 
+  }
+  else{
+    if(regValue){
+      if(value)return false 
+      else return true 
+    }
+    else{
+      if(value)return false 
+      else return true 
+    }
+
+  }
+}

@@ -96,6 +96,7 @@ const Patient = () => {
             setDoctor(1);
           setStatus(singlePatientData.Status) ;
 
+
         }else{
           console.log("3333333333333333333333333333333333333333333333333333333", singlePatientData.ward)
 
@@ -118,6 +119,10 @@ const Patient = () => {
           setIpRegNo(singlePatientData.Registration_Nos) ; 
           setDoctor(1);
           setStatus(singlePatientData.Status) ;
+          setRemarks(singlePatientData.Remarks) ; 
+          setReferral(singlePatientData.Referral) ;
+          setAdmission(singlePatientData.Admission) ;
+          setPurpose(singlePatientData.Purpose) ;
 
         }
       }
