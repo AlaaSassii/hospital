@@ -8,10 +8,16 @@ import axios from 'axios';
 import { formatDateTime } from '../../../assets/functions';
 const AdvReg = () => {
   const {setCurrentPage } = useContext(CurrentPageContext) ;
-  const [number , setnumber] = useState('') ;
   const [patientData , setpatientData] = useState([]) ;  
   const [show , setShow] = useState(false) ; 
   const [data ,setsingledata] = useState({})
+
+  const [billNo , setbillNo] = useState("") ;
+  const [number , setnumber] = useState('') ;
+  const [paymentMode , setpatmentMode] = useState("") ; 
+  const [amount , setamount] = useState("") ; 
+  const [preparedby ,setPreapredby] = useState("")
+
   useEffect(()=>{
     setCurrentPage("In Patient Advance Register ")
   },[])
@@ -32,6 +38,17 @@ const AdvReg = () => {
       .catch(err => console.log(err)) 
     }
   },[number])
+  useEffect(() =>{
+    if(Object.values(data).length > 0){
+      console.log("ASDASDASDSDSDSD")
+      setbillNo("") ; 
+      setnumber(data.Registration_Nos) ; 
+      setpatmentMode(""); 
+      setamount("") ; 
+      setPreapredby(data.Prepared_by) ;
+      setShowCalender1(formatDateTime(data.Created).split(" ")[0]) ; 
+    }
+  },[data])
   return (
     <div className='inpatient_adv_reg'>
             <div className='back'>{"<Back"}</div>
@@ -39,24 +56,20 @@ const AdvReg = () => {
               <h5>New Bill</h5>
               <div>
               <div>
-              <div className='signle_form'><p>Bill No</p> <input type="text" /></div>
+              <div className='signle_form'><p>Bill No</p> <input type="text" value={billNo} /></div>
               <div className='signle_form'><p>IP number</p> <input type="text"  value={number} onChange={e => setnumber(e.target.value)}/></div>
-            {show && <>{patientData.length > 0 && <ul className={`items_data_ul`}><li>{patientData.map(item => <div onClick={()=>setsingledata(item)} >{item.Registration_Nos}</div>)}</li></ul>}</>} 
+            {show && <>{patientData.length > 0 && <div className={`items_data_ul`}><ul>{patientData.map(item => <li onClick={()=>setsingledata(item)} >{item.Registration_Nos}</li>)}</ul></div>}</>} 
 
               
-              <div className='signle_form'><p>Payment mode</p> <input type="text" /></div>
+              <div className='signle_form'><p>Payment mode</p> <input value={paymentMode} type="text" /></div>
               </div>
               <div>
               <div className='calendar-wrapper'>
             <p>Date of birth</p>
-            <div className="date">
-            <button className="btn-date" onClick={(e)=>{ e.preventDefault();setShowCalender1(Calendar => !Calendar)}}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-            <input type="text" readOnly value={calendarTime1}   />
-            {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
-{/* calendar when the button hits is re-render everything */}
-            </div></div>
-              <div className='signle_form'><p>Amount</p> <input type="text" /></div>
-              <div className='signle_form'><p>Prepared by:</p> <input type="text" /></div>
+            <input type="text" placeholder='date' value={calendarTime1} />
+           </div>
+              <div className='signle_form'><p>Amount</p> <input value={amount} type="text" /></div>
+              <div className='signle_form'><p>Prepared by:</p> <input  value={preparedby} type="text" /></div>
               </div>
               </div>
             </form>

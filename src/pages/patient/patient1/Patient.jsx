@@ -158,7 +158,7 @@ const Patient = () => {
         axios.post("http://13.232.134.127:8000/Patient/create-Outpatient" , {Patient:anotherId ,
         Doctor:doctor , Purpose:purpose , Referral:referral , Prepared_by:preparedBy , Remarks:remarks , Status:status , Category:category
       })
-          .then(resp => {console.log(resp.data);  })
+          .then(resp => {console.log(resp.data);alert("DONE !")  })
           .catch(err => console.log(err))
       }
       else{
