@@ -144,8 +144,9 @@ const Patient = () => {
     }
     if(patientId.length >= 1){
       setshowidoatient(true)
+      console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSEEE")
       axios(`http://13.232.134.127:8000/Patient/Patient-List-View?UUID=${patientId}`)
-    .then(resp => {console.log(resp.data.results);setpatientIDS(resp.data.results) ; setdirect({value:true , id:patientId}) })
+    .then(resp => {console.log(resp.data.results);setpatientIDS(resp.data.results) ;console.log("SSS");setdirect({value:true , id:patientId}) })
     .catch(err => {console.log(err)})
     }
   },[patientId]) ; 

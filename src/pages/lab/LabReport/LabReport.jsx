@@ -8,6 +8,7 @@ import { BsQuestionCircle } from 'react-icons/bs';
 import './index.scss'
 import { CurrentPageContext } from '../../../contexts/CurrentPage';
 import { MenuPageContext } from '../../../contexts/MenuPage';
+import axios from 'axios';
 function LabReport() {
 
   const {setCurrentPage } = useContext(CurrentPageContext) ;
@@ -16,39 +17,33 @@ function LabReport() {
     setCurrentPage("Lab report") ; 
     setMenuPage(false) ; 
   },[])
-            const [calendarTime1, setcalendarTime1] = useState(''); 
-            const [calendarTime2, setcalendarTime2] = useState(''); 
-            const [showCalender1 , setShowCalender1] = useState(false) ; 
-            const [showCalender2 , setShowCalender2] = useState(false) ; 
-            useEffect(()=>{
-              setcalendarTime1(format(new Date() , 'MM/dd/yyyy')) ; 
-              setcalendarTime2(format(new Date() , 'MM/dd/yyyy')) ; 
-          
-            },[])
+      const [pName , setpName] = useState("");
+      const [pId , setPid] = useState("") ; 
+      const [eNum , seteNum] = useState("") ; 
+      
+      useEffect(()=>{
+        if(pName || pId || eNum){
+               axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?Entry_No=${eNum}&patient_name=${pName}&patient_id=${pId}`)
+                .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; }) // take the results
+                .catch(err => console.log(err)) 
+        }
+      },[pName , pId ,eNum ])
   return (
     <div className='LabReport'>
             <div className='back'>{"< Back"}</div>
-            <div className='form1'>
-            <div className='calendar-wrapper'>
-              <p>Date and Time  from</p>
-              <div className="date">
-                <button className="btn-date" onClick={()=>setShowCalender1(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={calendarTime1}   />
-              {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime1(format(item , 'MM/dd/yyyy'))}}/>}
-            </div>
-            </div>
-            <div className='calendar-wrapper'>
-              <p>Date and Time to</p>
-              <div className="date">
-                <button className="btn-date" onClick={()=>setShowCalender2(Calendar => !Calendar)}><AiOutlineCalendar style={{fontSize:19 }}/></button>
-                <input type="text" readOnly value={calendarTime1}   />
-              {showCalender1 && <Calendar className='calenderElement' onChange={item => { setcalendarTime2(format(item , 'MM/dd/yyyy'))}}/>}
-            </div>
-            </div>
-            <div className='btn'>
-            <button><BiFilterAlt style={{fontSize:25}}/></button>
-            <button>Go</button>
-            </div>
+            <div>
+              <div>
+            <p>patient Name</p>
+            <input type="text" value={pName} onChange={e => setpName(e.target.value)} />
+              </div>
+              <div>
+            <p>patient id</p>
+            <input type="text" value={pId}  onChange={e => setPid(e.target.value)}/>
+              </div>
+              <div>
+            <p>Entry_No</p>
+            <input type="text" value={eNum}  onChange={e => seteNum(e.target.value)}/>
+              </div>
             </div>
             <div className="table-container">
       <table>

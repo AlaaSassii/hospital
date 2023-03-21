@@ -18,7 +18,15 @@ import InpatientMaster from './pages/inpatient/inpatientMaster/InpatientMaster' 
 import InpatientBilling from './pages/inpatient/inpatientBilling/InpatientBilling'
 import AdvReg from './pages/inpatient/inpatientAdvReg/AdvReg'
 import InpatientBillReps from './pages/inpatient/inpatienBillReports/InpatientBillReps'
-import InPatientMenu from './pages/inpatient/menu/Menu'
+import InPatientMenu from './pages/inpatient/menu/Menu' ;
+
+import MenuLab from './pages/lab/MenuLab/MenuLab' ;
+import CategoryMaster from './pages/lab/CategoryMaster/CategoryMaster'
+import DeparmentMaster from './pages/lab/DeparmentMaster/DeparmentMaster' ; 
+import LabReport from './pages/lab/LabReport/LabReport' ; 
+import TestEntery from './pages/lab/testentery/TestEntery' ;
+import TestMaster from './pages/lab/TestMasterr/TestMaster' ; 
+
 function App() {
   return (
     <CurrentPageContextProvider>
@@ -44,6 +52,12 @@ function App() {
         <Route path='/InPatientMenu/InpatientBillReps' element={<InpatientBillReps/>}/>
         <Route path='/InPatientMenu/AdvReg' element={<AdvReg/>}/>
 
+        <Route  path='/LabMenu' element={<MenuLab/>}/>
+        <Route  path='/LabMenu/CategoryMaster' element={<CategoryMaster/>}/>
+        <Route  path='/LabMenu/DeparmentMaster' element={<DeparmentMaster/>}/>
+        <Route  path='/LabMenu/LabReport' element={<LabReport/>}/>
+        <Route  path='/LabMenu/TestEntery' element={<TestEntery/>}/>
+        <Route  path='/LabMenu/TestMaster' element={<TestMaster/>}/>
         </Routes>
         {/* <InpatientBilling/> */}
       </PageWrapper>
@@ -70,5 +84,8 @@ const LINKS = () => {
   <Link to="/OutPatientMenu">OutPatientMenu</Link>
   <br />
   <Link to="/InPatientMenu">InPatientMenu</Link>
+  <br />
+
+  <Link to="/LabMenu">Lab</Link>
   </>)
 }

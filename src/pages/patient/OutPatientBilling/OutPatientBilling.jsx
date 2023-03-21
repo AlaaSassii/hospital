@@ -65,7 +65,7 @@ const OutPatientBilling = () => {
               if(number.length >= 1 ){
                 setShow(true)
                 axios(`http://13.232.134.127:8000/Patient/OutPatient-List-View?Registration_Nos=${number}`)
-                .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ; })
+                .then(resp =>{ console.log(resp.data.results) ; setpatientData(resp.data.results) ;console.log("asd") })
                 .catch(err => console.log(err)) 
               }
             },[number])
